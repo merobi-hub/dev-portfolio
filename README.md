@@ -2,7 +2,7 @@
 
 ## Languages
 - Typescript
-- CSS
+- HTML/CSS
 
 ## Libraries
 - Reactstrap
