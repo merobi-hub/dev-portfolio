@@ -1,0 +1,21 @@
+.main-div {
+  
+  z-Index: 0;
+  padding-top: 50;
+  margin-left: 0;
+  width: '100%';
+
+}
+
+button {
+  border: none;
+}
+button:hover {
+  /*border: 1px solid white;*/
+  /*border-radius: 6px;*/
+  background-color: darkgray;
+
+}
+.btn-typo:hover {
+  color: #000000!important;
+}
