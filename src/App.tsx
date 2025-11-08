@@ -6,6 +6,7 @@ import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import karmaPic from './assets/images/karma_typewriter.webp';
+import negKarmaPic from './assets/images/neg_karma_typewriter.webp';
 import olBug from './assets/images/ol-bug.png';
 import ReactGA from 'react-ga4';
 import CookieConsent from 'react-cookie-consent';
@@ -44,6 +45,7 @@ const darkTheme = {
         background: '#000000',
         color: '#FFFFFF',
         border: '#FFFFFF',
+        shadow: '0px 5px 10px -5px rgba(255, 255, 255, 1.0)',
     },
     breakpoints: {
         values: {
@@ -60,6 +62,7 @@ const lightTheme = {
         background: '#FFFFFF',
         color: '#000000',
         border: '#000000',
+        shadow: '0px 5px 10px -5px rgba(0, 0, 0, 1.0)',
     },
     breakpoints: {
         values: {
@@ -88,6 +91,13 @@ export default function App() {
     const [items, setItems] = useState(Projects);
     const projectCategories = [...new Set(Projects.map((val) => val.category))];
     const [cat, setCat] = useState<string>('');
+    const [isHovered, setIsHovered] = useState(false);
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
     const projectsLen = Projects.length;
     const itemsLen = items.length;
     const FilterItem = (currCat) => {
@@ -146,10 +156,12 @@ export default function App() {
     return (
         <ThemeContext.Provider value={{ theme }}>
             <div style={{ backgroundColor: theme.palette.background, width: '100%', margin: 0, padding: 0 }}>
-                <div style={{ color: theme.palette.color, marginLeft: '93vw', marginTop: '1.5vh', zIndex: 11, position: 'fixed' }}>
-                    <a style={{ textDecoration: 'None'}} href="https://openlineage.io/"><Avatar src={olBug} sx={{ height: '2.5vh' }}/></a>
+                <div style={{ color: theme.palette.color, marginLeft: '94vw', marginTop: '1.5vh', zIndex: 11, position: 'fixed' }}>
+                    <a style={{ textDecoration: 'None'}} href="https://openlineage.io/">
+                        <Avatar src={olBug} sx={{ height: '2.5vh' }}/>
+                    </a>
                 </div>
-                <div style={{ color: theme.palette.color, marginLeft: '96vw', marginTop: '1.5vh', zIndex: 11, position: 'fixed' }}>
+                <div style={{ color: theme.palette.color, marginLeft: '97vw', marginTop: '1.3vh', zIndex: 11, position: 'fixed' }}>
                     {theme === darkTheme ? 
                         <LightModeIcon sx={{ cursor: 'pointer' }} onClick={() => switchTheme(theme)} /> :
                         <DarkModeIcon sx={{ cursor: 'pointer' }} onClick={() => switchTheme(theme)} />
@@ -164,7 +176,8 @@ export default function App() {
                     height: 50,
                     overflow: 'hidden',
                     backgroundColor: theme.palette.background,
-                    opacity: 1
+                    opacity: 1,
+                    boxShadow: theme.palette.shadow,
                 }}>
                     <Nav style={{ width: '100%' }}>
                         <NavItem className='navitem'>
@@ -214,14 +227,16 @@ export default function App() {
                             <Col md='6'>
                                 <Avatar
                                     alt='Typewriter pic' 
-                                    src={karmaPic}
                                     sx={{ 
                                         width: 400, 
                                         height: 400,
                                         top: '30vh',
                                         left: '25vw',
                                         border: borderCss,
-                                    }}
+                                    }}                                    
+                                    onMouseEnter={() => handleMouseEnter()} 
+                                    onMouseLeave={() => handleMouseLeave()}
+                                    src={ isHovered ? negKarmaPic : karmaPic }
                                 />
                             </Col>
                             <Col md='6'>
