@@ -334,7 +334,16 @@ export default function App() {
                                                 <div key={index} md='12' sm className='col d-flex' style={{ marginTop: 60, justifyContent: 'space-evenly' }}>
                                                     <Card
                                                         variant='outlined'
-                                                        style={{ minWidth: 500, maxWidth: 500, minHeight: 550, marginTop: 7, backgroundColor: theme.palette.background, color: theme.palette.color, borderColor: theme.palette.border }}
+                                                        style={{ 
+                                                            minWidth: 500, 
+                                                            maxWidth: 500, 
+                                                            minHeight: 550, 
+                                                            marginTop: 7, 
+                                                            backgroundColor: theme.palette.background, 
+                                                            color: theme.palette.color, 
+                                                            borderColor: theme.palette.border,
+                                                            borderWidth: '2px', 
+                                                        }}
                                                     >                                  
                                                         <CardMedia 
                                                             style={{ height: '20em'}}
