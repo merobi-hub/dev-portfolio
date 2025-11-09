@@ -11,7 +11,7 @@ import olBug from './assets/images/ol-bug.png';
 import ReactGA from 'react-ga4';
 import CookieConsent from 'react-cookie-consent';
 import Resume from './assets/files/DevAdv_08112025_ATS_web.pdf';
-import { createContext, useState, useRef } from 'react';
+import { createContext, useState, useRef, useEffect } from 'react';
 import './App.css?inline';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -98,6 +98,20 @@ export default function App() {
     const handleMouseLeave = () => {
         setIsHovered(false);
     };
+    const [isScrolled, setScrolled] = useState(false);
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
     const projectsLen = Projects.length;
     const itemsLen = items.length;
     const FilterItem = (currCat) => {
@@ -156,30 +170,32 @@ export default function App() {
     return (
         <ThemeContext.Provider value={{ theme }}>
             <div style={{ backgroundColor: theme.palette.background, width: '100%', margin: 0, padding: 0 }}>
-                <div style={{ color: theme.palette.color, marginLeft: '94vw', marginTop: '1.5vh', zIndex: 11, position: 'fixed' }}>
-                    <a style={{ textDecoration: 'None'}} href="https://openlineage.io/">
-                        <Avatar src={olBug} sx={{ height: '2.5vh' }}/>
-                    </a>
-                </div>
-                <div style={{ color: theme.palette.color, marginLeft: '97vw', marginTop: '1.3vh', zIndex: 11, position: 'fixed' }}>
-                    {theme === darkTheme ? 
-                        <LightModeIcon sx={{ cursor: 'pointer' }} onClick={() => switchTheme(theme)} /> :
-                        <DarkModeIcon sx={{ cursor: 'pointer' }} onClick={() => switchTheme(theme)} />
-                    }
-                </div>
-                <div className='nav-main-div' style={{ 
-                    zIndex: 10,
-                    display: 'flex', 
-                    width: '100%',
-                    borderBottom: cssString,
-                    position: 'fixed', 
-                    height: 50,
-                    overflow: 'hidden',
-                    backgroundColor: theme.palette.background,
-                    opacity: 1,
-                    boxShadow: theme.palette.shadow,
-                }}>
+                <div className='nav-main-div' 
+                    style={{ 
+                        zIndex: 10,
+                        display: 'flex', 
+                        width: '100%',
+                        borderBottom: cssString,
+                        position: 'fixed', 
+                        height: 50,
+                        overflow: 'hidden',
+                        backgroundColor: theme.palette.background,
+                        opacity: isScrolled ? 0.5 : 1,
+                        boxShadow: isScrolled ? theme.palette.shadow : ''
+                    }}
+                > 
                     <Nav style={{ width: '100%' }}>
+                        <div style={{ color: theme.palette.color, marginLeft: '94vw', marginTop: '1.5vh', zIndex: 11, position: 'fixed' }}>
+                            <a style={{ textDecoration: 'None'}} href="https://openlineage.io/">
+                                <Avatar src={olBug} sx={{ height: '2.5vh' }}/>
+                            </a>
+                        </div>
+                        <div style={{ color: theme.palette.color, marginLeft: '97vw', marginTop: '1.3vh', zIndex: 11, position: 'fixed' }}>
+                            {theme === darkTheme ? 
+                                <LightModeIcon sx={{ cursor: 'pointer' }} onClick={() => switchTheme(theme)} /> :
+                                <DarkModeIcon sx={{ cursor: 'pointer' }} onClick={() => switchTheme(theme)} />
+                            }
+                        </div>
                         <NavItem className='navitem'>
                             <NavLink style={{ color: theme.palette.color, textDecoration: 'None' }}
                                 href="/#home"
@@ -221,7 +237,7 @@ export default function App() {
                         </NavItem>
                     </Nav>
                 </div>
-                <div id='home' className='main-div' style={{ backgroundColor: theme.palette.background, width: '100%', margin: 0, padding: 0 }}>
+                <div id='home' className='main_div' style={{ backgroundColor: theme.palette.background, width: '100%', margin: 0, padding: 0 }}>
                     <Container style={{ zIndex: 0 , height: '100vh', width: '100vw', marginLeft: 0, marginRight: 0, paddingLeft: 0, paddingRight: 0   }}>
                         <Row style={{ height: '100vh', width: '100vw' }}>
                             <Col md='6'>
