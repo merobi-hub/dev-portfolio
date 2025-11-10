@@ -112,6 +112,13 @@ export default function App() {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+    const [navIsHovered, navSetHovered] = useState(false);
+    const navHandleMouseEnter = () => {
+        navSetHovered(true);
+    };
+    const navHandleMouseLeave = () => {
+        navSetHovered(false);
+    };
     const projectsLen = Projects.length;
     const itemsLen = items.length;
     const FilterItem = (currCat) => {
@@ -171,6 +178,8 @@ export default function App() {
         <ThemeContext.Provider value={{ theme }}>
             <div style={{ backgroundColor: theme.palette.background, width: '100%', margin: 0, padding: 0 }}>
                 <div className='nav-main-div' 
+                    onMouseEnter={() => navHandleMouseEnter()} 
+                    onMouseLeave={() => navHandleMouseLeave()}
                     style={{ 
                         zIndex: 10,
                         display: 'flex', 
@@ -180,8 +189,8 @@ export default function App() {
                         height: 50,
                         overflow: 'hidden',
                         backgroundColor: theme.palette.background,
-                        opacity: isScrolled ? 0.5 : 1,
-                        boxShadow: isScrolled ? theme.palette.shadow : ''
+                        opacity: navIsHovered ? 1 : isScrolled ? 0.5 : 1,
+                        boxShadow: navIsHovered ? theme.palette.shadow : isScrolled ? theme.palette.shadow : ''
                     }}
                 > 
                     <Nav style={{ width: '100%' }}>
