@@ -190,7 +190,7 @@ export default function App() {
                         overflow: 'hidden',
                         backgroundColor: theme.palette.background,
                         opacity: navIsHovered ? 1 : isScrolled ? 0.5 : 1,
-                        boxShadow: navIsHovered ? theme.palette.shadow : isScrolled ? theme.palette.shadow : ''
+                        boxShadow: navIsHovered && isScrolled ? theme.palette.shadow : isScrolled ? theme.palette.shadow : ''
                     }}
                 > 
                     <Nav style={{ width: '100%' }}>
