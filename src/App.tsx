@@ -17,6 +17,8 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import Fade from '@mui/material/Fade';
+import Backdrop from '@mui/material/Backdrop';
 import HomeFilledIcon from '@mui/icons-material/HomeFilled';
 import Card from '@mui/material/Card';
 import Modal from '@mui/material/Modal';
@@ -144,22 +146,31 @@ export default function App() {
             disablePortal
             open={modalIsOpen}
             onClose={() => modalSetOpen(false)}
+            closeAfterTransition
+            slots={{ backdrop: Backdrop }}
+            slotProps={{
+              backdrop: {
+                timeout: 500,
+              },
+            }}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <Box sx={modalStyle}>
-                <span style={{ position: 'absolute', marginLeft: '83%', marginTop: '0' }}>
-                    <a href='https://github.com/merobi-hub/dev-portfolio' style={{ color: '#000000' }}>
-                        <GitHubIcon sx={{ marginTop: 0, fontSize: '150%' }} />
-                    </a>
-                </span>
-              <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ fontFamily: theme.typography.fontFamily }}>
-                Specs
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2, fontFamily: theme.typography.fontFamily }}>
-                Languages: Typescript, CSS, HTML <br/> Framework: React 19 <br/> Dev server: Vite <br/> Hosting: Firebase <br/> FE Libs: MaterialUI, Reactstrap, Emotion <br/> Analytics: GA4 <br/> Email service: EmailJS API<br/>
-              </Typography>
-            </Box>
+            <Fade in={modalIsOpen}>
+                <Box sx={modalStyle}>
+                    <span style={{ position: 'absolute', marginLeft: '83%', marginTop: '0' }}>
+                        <a href='https://github.com/merobi-hub/dev-portfolio' style={{ color: '#000000' }}>
+                            <GitHubIcon sx={{ marginTop: 0, fontSize: '150%' }} />
+                        </a>
+                    </span>
+                  <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ fontFamily: theme.typography.fontFamily }}>
+                    Specs
+                  </Typography>
+                  <Typography id="modal-modal-description" sx={{ mt: 2, fontFamily: theme.typography.fontFamily }}>
+                    Language: Typescript <br/> Framework: React 19 <br/> Bundler: Vite <br/> Hosting: Firebase <br/> FE Libraries: MaterialUI, Reactstrap <br/> Analytics: GA4 <br/> Email service: EmailJS API<br/>
+                  </Typography>
+                </Box>
+            </Fade>
           </Modal>
         </div>
       );
