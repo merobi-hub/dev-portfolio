@@ -33,6 +33,7 @@ import emailjs from '@emailjs/browser';
 import { Navigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { createPortal } from 'react-dom';
+import { motion } from "motion/react"
 
 const ThemeContext = createContext();
 
@@ -141,7 +142,11 @@ export default function App() {
     function SpecsModal() {
       return (
         <div className="modal-div">
-          <Button sx={{ color: theme.palette.color, fontFamily: theme.typography.fontFamily }} onClick={() => modalSetOpen(true)}>About</Button>
+            <Button 
+                style={{ color: theme.palette.color, fontFamily: theme.typography.fontFamily }} 
+                onClick={() => modalSetOpen(true)}
+            >About
+            </Button>
           <Modal
             disablePortal
             open={modalIsOpen}
@@ -163,7 +168,7 @@ export default function App() {
                             <GitHubIcon sx={{ marginTop: 0, fontSize: '150%' }} />
                         </a>
                     </span>
-                  <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ fontFamily: theme.typography.fontFamily }}>
+                  <Typography className='btn-typo' sx={{ fontFamily: theme.typography.fontFamily }}>
                     Specs
                   </Typography>
                   <Typography id="modal-modal-description" sx={{ mt: 2, fontFamily: theme.typography.fontFamily }}>
@@ -315,59 +320,60 @@ export default function App() {
                     </Nav>
                 </div>
                 <div id='home' className='main_div' style={{ backgroundColor: theme.palette.background, width: '100%', margin: 0, padding: 0 }}>
-                    <Container style={{ zIndex: 0 , height: '100vh', width: '100vw', marginLeft: 0, marginRight: 0, paddingLeft: 0, paddingRight: 0   }}>
-                        <Row style={{ height: '100vh', width: '100vw' }}>
-                            <Col md='6'>
-                                <Avatar
-                                    alt='Typewriter pic' 
-                                    sx={{ 
-                                        width: 400, 
-                                        height: 400,
-                                        top: '30vh',
-                                        left: '25vw',
-                                        border: borderCss,
-                                    }}                                    
-                                    onMouseEnter={() => handleMouseEnter()} 
-                                    onMouseLeave={() => handleMouseLeave()}
-                                    src={ isHovered ? negKarmaPic : karmaPic }
-                                />
-                            </Col>
-                            <Col md='6'>
-                                <Row style={{ height: 35, position: 'relative', top: '43vh' }}>
-                                    <Col md='12' className='text-left align-items-bottom'>
-                                        <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '3.0rem' }}>Michael Robinson</Typography>
-                                    </Col>
-                                </Row>
-                                <Row style={{ height: 35, position: 'relative', top: '45.5vh' }}>
-                                    <Col md='12' className='align-items-top text-left'>
-                                        <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '1.37rem' }}>Developer and Learning Technologist</Typography>
-                                    </Col>
-                                </Row>
-                                <Row style={{ height: 400, position: 'relative', top: '46vh' }}>
-                                    <Col md='2' className='align-items-top justify-items-right'>
+                    <motion.div
+                        initial={{ scale: 25 }} 
+                        animate={{ scale: 1 }} 
+                        transition={{
+                            duration: 1.0,
+                            scale: { type: "spring", visualDuration: 0.4, bounce: 0 },
+                        }}
+                    >
+                        <Container style={{ zIndex: 0 , height: '100vh', width: '100vw', marginLeft: 0, marginRight: 0, paddingLeft: 0, paddingRight: 0   }}>
+                            <Row style={{ height: '100vh', width: '100vw' }}>
+                                <Col md='6'>
+                                    <Avatar
+                                        alt='Typewriter pic' 
+                                        sx={{ 
+                                            width: 400, 
+                                            height: 400,
+                                            top: '30vh',
+                                            left: '25vw',
+                                            border: borderCss,
+                                        }}                                    
+                                        onMouseEnter={() => handleMouseEnter()} 
+                                        onMouseLeave={() => handleMouseLeave()}
+                                        src={ isHovered ? negKarmaPic : karmaPic }
+                                    />
+                                </Col>
+                                <Col md='6'>
+                                    <Row style={{ height: 35, position: 'relative', top: '43vh' }}>
+                                        <Col md='12' className='text-left align-items-bottom'>
+                                            <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '3.25rem' }}>Michael Robinson</Typography>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ height: 35, position: 'relative', top: '45.5vh' }}>
+                                        <Col md='12' className='align-items-top text-left'>
+                                            <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '1.5rem' }}>Developer and Learning Technologist</Typography>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ height: 400, position: 'relative', top: '46vh', justifyContent: 'space-between', width: '30.5vw' }}> 
                                         <a href='https://github.com/merobi-hub' style={{ color: theme.palette.color }}>
-                                            <GitHubIcon sx={{ marginTop: 0, fontSize: '150%' }} />
+                                            <GitHubIcon style={{ marginTop: 0, fontSize: '150%', marginLeft: '0.9vw' }} />
                                         </a>
-                                    </Col>
-                                    <Col md='2' className='align-items-top justify-items-center'>
                                         <a href='https://www.linkedin.com/in/michael-robinson/' style={{ color: theme.palette.color }}>
                                             <LinkedInIcon sx={{ marginTop: 0, fontSize: '150%' }} />
                                         </a>
-                                    </Col>
-                                    <Col md='2' className='align-items-top justify-items-center'>
                                         <a href={Resume} download='Robinson_resume' style={{ color: theme.palette.color }}>
                                             <DownloadForOfflineIcon sx={{ marginTop: 0, fontSize: '150%' }} />
                                         </a>
-                                    </Col>
-                                    <Col md='2' className='align-items-top justify-items-center'>
                                         <a href='mailto:merobi@gmail.com' style={{ color: theme.palette.color }}>
-                                            <EmailIcon sx={{ marginTop: 0, fontSize: '150%' }}/>
+                                            <EmailIcon sx={{ marginTop: 0, fontSize: '150%', marginRight: '0.9vw' }}/>
                                         </a>
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row>
-                    </Container>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </motion.div>
                     <LoadCookieConsent />
                     <div id='portfolio' style={{ scrollMarginTop: 70, padding: 0, marginTop: 25, position: 'relative', width: '100%' }}>
                         <div style={{ display: 'flex', width: '100%', padding: 0, position: 'relative' }}>
