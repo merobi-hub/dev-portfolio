@@ -137,7 +137,7 @@ export default function App() {
       boxShadow: 24,
       color: '#000000',
       p: 4,
-      opacity: .80
+      opacity: .50
     };
     function SpecsModal() {
       return (
@@ -172,7 +172,7 @@ export default function App() {
                     Specs
                   </Typography>
                   <Typography id="modal-modal-description" sx={{ mt: 2, fontFamily: theme.typography.fontFamily }}>
-                    Language: Typescript <br/> Framework: React 19 <br/> Bundler: Vite <br/> Hosting: Firebase <br/> FE Libraries: MaterialUI, Reactstrap <br/> Analytics: GA4 <br/> Email service: EmailJS API<br/>
+                    Language: Typescript <br/> Framework: React 19 <br/> Bundler: Vite <br/> Hosting: Firebase <br/> FE Libraries: MaterialUI, Reactstrap, Motion <br/> Analytics: GA4 <br/> Email service: EmailJS API<br/>
                   </Typography>
                 </Box>
             </Fade>
@@ -236,7 +236,7 @@ export default function App() {
           onDecline={() => {
             alert('Cookie preferences saved.');
           }}
-          style={{ fontFamily: theme.typography.fontFamily, position: 'fixed', top: '92%' }}
+          style={{ fontFamily: theme.typography.fontFamily, position: 'fixed', top: '93%' }}
         >
           This website uses cookies.
         </CookieConsent>
@@ -268,7 +268,7 @@ export default function App() {
                             <SpecsModal/>
                         </div>
                         <div style={{ color: theme.palette.color, marginLeft: '93vw', marginTop: '1.5vh', zIndex: 11, position: 'fixed' }}>
-                            <a style={{ textDecoration: 'None'}} href="https://openlineage.io/">
+                            <a style={{ textDecoration: 'None'}} href="https://openlineage.io/" target="_blank">
                                 <Avatar src={olBug} sx={{ height: '2.5vh' }}/>
                             </a>
                         </div>
@@ -325,7 +325,7 @@ export default function App() {
                         animate={{ scale: 1 }} 
                         transition={{
                             duration: 1.0,
-                            scale: { type: "spring", visualDuration: 0.4, bounce: 0 },
+                            scale: { type: "spring", visualDuration: 0.8, bounce: 0 },
                         }}
                     >
                         <Container style={{ zIndex: 0 , height: '100vh', width: '100vw', marginLeft: 0, marginRight: 0, paddingLeft: 0, paddingRight: 0   }}>
@@ -430,8 +430,12 @@ export default function App() {
                                     <Grid container margin='auto' rowSpacing={8} columnSpacing={4} paddingBottom={4} width='85%'>
                                         {items.map((project, index) => (
                                             <Grid marginX='auto' justifyItems='top'>
-                                                <div key={index} md='12' sm className='col d-flex' style={{ marginTop: 60, justifyContent: 'space-evenly' }}>
+                                                <div md='12' sm className='col d-flex' style={{ marginTop: 60, justifyContent: 'space-evenly' }}>
                                                     <Card
+                                                        key={project.img_path}
+                                                        component={motion.div}
+                                                        initial={{ scale: 0 }} 
+                                                        animate={{ scale: 1 }}
                                                         variant='outlined'
                                                         style={{ 
                                                             minWidth: 500, 
@@ -480,6 +484,7 @@ export default function App() {
                                                             ))}
                                                         </CardActions>
                                                     </Card>
+                                                
                                                 </div>
                                             </Grid>
                                         ))}
