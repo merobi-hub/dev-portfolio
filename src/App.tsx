@@ -339,6 +339,7 @@ export default function App() {
                                             top: '30vh',
                                             left: '25vw',
                                             border: borderCss,
+                                            boxShadow: 10
                                         }}                                    
                                         onMouseEnter={() => handleMouseEnter()} 
                                         onMouseLeave={() => handleMouseLeave()}
@@ -367,7 +368,7 @@ export default function App() {
                                             <DownloadForOfflineIcon sx={{ marginTop: 0, fontSize: '150%' }} />
                                         </a>
                                         <a href='mailto:merobi@gmail.com' style={{ color: theme.palette.color }}>
-                                            <EmailIcon sx={{ marginTop: 0, fontSize: '150%', marginRight: '0.9vw' }}/>
+                                            <EmailIcon sx={{ marginTop: 0, fontSize: '150%', marginRight: '1vw' }}/>
                                         </a>
                                     </Row>
                                 </Col>
@@ -437,7 +438,7 @@ export default function App() {
                                                         initial={{ scale: 0 }} 
                                                         animate={{ scale: 1 }}
                                                         variant='outlined'
-                                                        style={{ 
+                                                        sx={{ 
                                                             minWidth: 500, 
                                                             maxWidth: 500, 
                                                             minHeight: 550, 
@@ -445,7 +446,8 @@ export default function App() {
                                                             backgroundColor: theme.palette.background, 
                                                             color: theme.palette.color, 
                                                             borderColor: theme.palette.border,
-                                                            borderWidth: '2px', 
+                                                            borderWidth: '2px',
+                                                            boxShadow: 10 
                                                         }}
                                                     >                                  
                                                         <CardMedia 
