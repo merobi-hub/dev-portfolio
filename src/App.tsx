@@ -358,16 +358,16 @@ export default function App() {
                                         </Col>
                                     </Row>
                                     <Row style={{ height: 400, position: 'relative', top: '46vh', justifyContent: 'space-between', width: '30.5vw' }}> 
-                                        <a href='https://github.com/merobi-hub' style={{ color: theme.palette.color }}>
+                                        <a href='https://github.com/merobi-hub' target="_blank" style={{ color: theme.palette.color }}>
                                             <GitHubIcon style={{ marginTop: 0, fontSize: '150%', marginLeft: '0.9vw' }} />
                                         </a>
-                                        <a href='https://www.linkedin.com/in/michael-robinson/' style={{ color: theme.palette.color }}>
+                                        <a href='https://www.linkedin.com/in/michael-robinson/' target="_blank" style={{ color: theme.palette.color }}>
                                             <LinkedInIcon sx={{ marginTop: 0, fontSize: '150%' }} />
                                         </a>
-                                        <a href={Resume} download='Robinson_resume' style={{ color: theme.palette.color }}>
+                                        <a href={Resume} download='Robinson_resume' target="_blank" style={{ color: theme.palette.color }}>
                                             <DownloadForOfflineIcon sx={{ marginTop: 0, fontSize: '150%' }} />
                                         </a>
-                                        <a href='mailto:merobi@gmail.com' style={{ color: theme.palette.color }}>
+                                        <a href='mailto:merobi@gmail.com' target="_blank" style={{ color: theme.palette.color }}>
                                             <EmailIcon sx={{ marginTop: 0, fontSize: '150%', marginRight: '1vw' }}/>
                                         </a>
                                     </Row>
