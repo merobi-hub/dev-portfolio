@@ -49,15 +49,17 @@ const darkTheme = {
     },
     palette: {
         background: '#000000',
-        color: '#FFFFFF',
-        border: '#FFFFFF',
-        shadow: '0px 5px 10px -5px rgba(255, 255, 255, 1.0)',
+        color: '#fff',
+        border: '#fff',
+        navShadow: '0px 5px 10px -5px rgba(255, 255, 255, 1.0)',
+        avatarShadow: '',
     },
     breakpoints: {
         values: {
             sm: 600,
         },
     },
+    cardType: 'outlined'
 }
 
 const lightTheme = {
@@ -65,16 +67,18 @@ const lightTheme = {
         fontFamily: 'Consolas, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Monaco, Courier New, Courier, monospace',
     },
     palette: {
-        background: '#FFFFFF',
+        background: '#fff',
         color: '#000000',
         border: '#000000',
-        shadow: '0px 5px 10px -5px rgba(0, 0, 0, 1.0)',
+        navShadow: '0px 5px 10px -5px rgba(0, 0, 0, 1.0)',
+        avatarShadow: '0px 6px 6px -3px rgba(0, 0, 0, 0.2), 0px 10px 14px 1px rgba(0, 0, 0, 0.14), 0px 4px 18px 3px rgba(0, 0, 0, 0.12)',
     },
     breakpoints: {
         values: {
             sm: 600,
         },
     },
+    cardType: 'elevation'
 }
 
 const schema = yup.object().shape({
@@ -260,7 +264,7 @@ export default function App() {
                         overflow: 'hidden',
                         backgroundColor: theme.palette.background,
                         opacity: navIsHovered ? 1 : isScrolled ? 0.5 : 1,
-                        boxShadow: navIsHovered && isScrolled ? theme.palette.shadow : isScrolled ? theme.palette.shadow : ''
+                        boxShadow: navIsHovered && isScrolled ? theme.palette.navShadow : isScrolled ? theme.palette.navShadow : ''
                     }}
                 > 
                     <Nav style={{ width: '100%' }}>
@@ -322,10 +326,11 @@ export default function App() {
                 <div id='home' className='main_div' style={{ backgroundColor: theme.palette.background, width: '100%', margin: 0, padding: 0 }}>
                     <motion.div
                         initial={{ scale: 25 }} 
-                        animate={{ scale: 1 }} 
+                        animate={{ scale: 1 }}
                         transition={{
+                            delay: 2.0,
                             duration: 1.0,
-                            scale: { type: "spring", visualDuration: 0.8, bounce: 0 },
+                            scale: { type: "ease" },
                         }}
                     >
                         <Container style={{ zIndex: 0 , height: '100vh', width: '100vw', marginLeft: 0, marginRight: 0, paddingLeft: 0, paddingRight: 0   }}>
@@ -338,8 +343,8 @@ export default function App() {
                                             height: 400,
                                             top: '30vh',
                                             left: '25vw',
-                                            border: borderCss,
-                                            boxShadow: 10
+                                            border: theme === darkTheme ? borderCss : '',
+                                            boxShadow: theme.palette.avatarShadow,
                                         }}                                    
                                         onMouseEnter={() => handleMouseEnter()} 
                                         onMouseLeave={() => handleMouseLeave()}
@@ -437,7 +442,7 @@ export default function App() {
                                                         component={motion.div}
                                                         initial={{ scale: 0 }} 
                                                         animate={{ scale: 1 }}
-                                                        variant='outlined'
+                                                        variant={theme.cardType}
                                                         sx={{ 
                                                             minWidth: 500, 
                                                             maxWidth: 500, 
@@ -447,11 +452,13 @@ export default function App() {
                                                             color: theme.palette.color, 
                                                             borderColor: theme.palette.border,
                                                             borderWidth: '2px',
-                                                            boxShadow: 10 
+                                                            boxShadow: theme.palette.shadow,
                                                         }}
+                                                        elevation='10'
+
                                                     >                                  
                                                         <CardMedia 
-                                                            style={{ height: '20em'}}
+                                                            sx={{ height: '20em'}}
                                                             image={project.img_path}
                                                             title='Screenshot of app'
                                                         />
