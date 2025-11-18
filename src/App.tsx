@@ -508,7 +508,17 @@ export default function App() {
                                 <div style={{ marginTop: 140, paddingBottom: 140, backgroundColor: theme.palette.background }}>
                                     <div className='justify-content-md-center' style={{ width: '100%' }}>
                                         <div className='col display-flex' md='12'>
-                                            <Card variant='outlined' sx={{ marginLeft: 'auto', marginRight: 'auto', width: 600, borderWidth: '2px', borderColor: theme.palette.border }}>
+                                            <Card 
+                                                variant={theme.cardType} 
+                                                sx={{ 
+                                                    marginLeft: 'auto', 
+                                                    marginRight: 'auto', 
+                                                    width: 600, 
+                                                    borderWidth: '2px', 
+                                                    borderColor: theme.palette.border 
+                                                }}
+                                                elevation='10'
+                                            >
                                                 <CardContent sx={{ backgroundColor: theme.palette.background, color: theme.palette.color }}>
                                                     <form ref={form} onSubmit={sendEmail}>
                                                         <div style={{ marginBottom: 20 }}>
