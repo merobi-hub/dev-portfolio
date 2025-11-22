@@ -325,20 +325,25 @@ export default function App() {
                 </div>
                 <div id='home' className='main_div' style={{ backgroundColor: theme.palette.background, width: '100%', margin: 0, padding: 0 }}>
                     <motion.div
-                        initial={{ scale: 25 }} 
-                        animate={{ scale: 1 }}
-                        transition={{
-                            delay: 2.0,
-                            duration: 1.0,
-                            scale: { type: "ease" },
-                        }}
+                        // initial={{ scale: 10 }} 
+                        // animate={{ scale: 1 }}
+                        // transition={{
+                        //     delay: 2.0,
+                        //     duration: 2.0,
+                        //     scale: { type: "ease" },
+                        //     opacity: { ease: "linear" },
+                        // }}
+                        // animate={{
+                        //     y: [0, 100, 0],
+                        //     transition: { ease: ["easeIn", "easeOut"] }
+                        // }}
                     >
                         <Container style={{ zIndex: 0 , height: '100vh', width: '100vw', marginLeft: 0, marginRight: 0, paddingLeft: 0, paddingRight: 0   }}>
                             <Row style={{ height: '100vh', width: '100vw' }}>
                                 <Col md='6'>
                                     <Avatar
                                         alt='Typewriter pic' 
-                                        sx={{ 
+                                        sx={{
                                             width: 400, 
                                             height: 400,
                                             top: '30vh',
@@ -394,16 +399,15 @@ export default function App() {
                                                         padding: '2px 0px 4px', 
                                                         borderColor: theme.palette.border, 
                                                         fontWeight: 'bold',
-                                                        fontFamily: theme.typography.fontFamily
+                                                        fontFamily: theme.typography.fontFamily,
                                                     } : { 
                                                         color: theme.palette.color, 
                                                         padding: '2px 0px 4px',
-                                                        fontFamily: theme.typography.fontFamily
+                                                        fontFamily: theme.typography.fontFamily,
                                                         } 
                                                     }
                                                     onClick={() => FilterItem('all')}
                                                     size='small'
-                                                    variant='outlined'
                                                 >
                                                 ALL
                                                 </Button>
@@ -424,7 +428,8 @@ export default function App() {
                                                             }}
                                                             onClick={() => FilterItem(val)}
                                                             size='small'
-                                                            variant='outlined'
+                                                            variant={theme.cardType}
+                                                            elevation="10"
                                                         >
                                                             {val}
                                                         </Button>
@@ -440,7 +445,7 @@ export default function App() {
                                                     <Card
                                                         key={project.img_path}
                                                         component={motion.div}
-                                                        initial={{ scale: 0 }} 
+                                                        initial={{ scale: 0.95 }} 
                                                         animate={{ scale: 1 }}
                                                         variant={theme.cardType}
                                                         sx={{ 
