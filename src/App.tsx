@@ -1,39 +1,42 @@
-import { Nav, NavItem, NavLink, Col, Row, Container } from 'reactstrap';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import EmailIcon from '@mui/icons-material/Email';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
-import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
-import karmaPic from './assets/images/karma_typewriter.webp';
-import negKarmaPic from './assets/images/neg_karma_typewriter.webp';
-import olBug from './assets/images/ol-bug.png';
-import ReactGA from 'react-ga4';
-import CookieConsent from 'react-cookie-consent';
-import Resume from './assets/files/DevAdv_08112025_ATS_web.pdf';
 import { createContext, useState, useRef, useEffect } from 'react';
-import './App.css?inline';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Fade from '@mui/material/Fade';
+import { createPortal } from 'react-dom';
+import { Nav, NavItem, NavLink, Col, Row, Container } from 'reactstrap';
+import { Navigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+
+import * as yup from 'yup';
+import Avatar from '@mui/material/Avatar';
 import Backdrop from '@mui/material/Backdrop';
-import HomeFilledIcon from '@mui/icons-material/HomeFilled';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import Modal from '@mui/material/Modal';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import { Projects } from './projects.tsx';
-import Grid from '@mui/material/Grid';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import CookieConsent from 'react-cookie-consent';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+import EmailIcon from '@mui/icons-material/Email';
 import emailjs from '@emailjs/browser';
-import { Navigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { createPortal } from 'react-dom';
+import Fade from '@mui/material/Fade';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import Grid from '@mui/material/Grid';
+import HomeFilledIcon from '@mui/icons-material/HomeFilled';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import Modal from '@mui/material/Modal';
+import ReactGA from 'react-ga4';
+import Typography from '@mui/material/Typography';
 import { motion } from "motion/react"
+import { useAnimationFrame } from "motion/react"
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import './App.css?inline';
+import karmaPic from './assets/images/karma_typewriter.webp';
+import negKarmaPic from './assets/images/neg_karma_typewriter.webp';
+import olBug from './assets/images/ol-bug.png';
+import Resume from './assets/files/DevAdv_08112025_ATS_web.pdf';
+import { Projects } from './projects.tsx';
 
 const ThemeContext = createContext();
 
@@ -81,15 +84,16 @@ const lightTheme = {
     cardType: 'elevation'
 }
 
-const schema = yup.object().shape({
-    name: yup.string().required(),
-    email: yup.string().email(),
-    message: yup.string().required(),
-});
-
 
 export default function App() {
     const [theme, changeTheme] = useState(darkTheme);
+    const [isHovered, setIsHovered] = useState(false);
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
     const switchTheme = (currMode) => {
         if (currMode === darkTheme) { 
             changeTheme(lightTheme);
@@ -99,294 +103,183 @@ export default function App() {
     const borderCss = '5px solid '+theme.palette.border;
     const cssString = '1px solid '+theme.palette.border;
 
-    // Nav
-    const [isHovered, setIsHovered] = useState(false);
-    const handleMouseEnter = () => {
-        setIsHovered(true);
-    };
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-    };
-    const [isScrolled, setScrolled] = useState(false);
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 50) {
-                setScrolled(true);
-            } else {
-                setScrolled(false);
-            }
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
-    const [navIsHovered, navSetHovered] = useState(false);
-    const navHandleMouseEnter = () => {
-        navSetHovered(true);
-    };
-    const navHandleMouseLeave = () => {
-        navSetHovered(false);
-    };
-
-    // Modal
-    const [modalIsOpen, modalSetOpen] = useState(false);
-    const modalStyle = {
-      position: 'absolute',
-      top: '50px',
-      right: '0%',
-      width: 500,
-      bgcolor: 'background.paper',
-      border: '2px solid #000',
-      boxShadow: 24,
-      color: '#000000',
-      p: 4,
-      opacity: .50
-    };
-    function SpecsModal() {
-      return (
-        <div className="modal-div">
-            <Button 
-                style={{ color: theme.palette.color, fontFamily: theme.typography.fontFamily }} 
-                onClick={() => modalSetOpen(true)}
-            >About
-            </Button>
-          <Modal
-            disablePortal
-            open={modalIsOpen}
-            onClose={() => modalSetOpen(false)}
-            closeAfterTransition
-            slots={{ backdrop: Backdrop }}
-            slotProps={{
-              backdrop: {
-                timeout: 500,
-              },
-            }}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Fade in={modalIsOpen}>
-                <Box sx={modalStyle}>
-                    <span style={{ position: 'absolute', marginLeft: '83%', marginTop: '0' }}>
-                        <a href='https://github.com/merobi-hub/dev-portfolio' style={{ color: '#000000' }}>
-                            <GitHubIcon sx={{ marginTop: 0, fontSize: '150%' }} />
-                        </a>
-                    </span>
-                  <Typography className='btn-typo' sx={{ fontFamily: theme.typography.fontFamily }}>
-                    Specs
-                  </Typography>
-                  <Typography id="modal-modal-description" sx={{ mt: 2, fontFamily: theme.typography.fontFamily }}>
-                    Language: Typescript <br/> Framework: React 19 <br/> Bundler: Vite <br/> Hosting: Firebase <br/> FE Libraries: MaterialUI, Reactstrap, Motion <br/> Analytics: GA4 <br/> Email service: EmailJS API<br/>
-                  </Typography>
-                </Box>
-            </Fade>
-          </Modal>
-        </div>
-      );
-    }
-
-    // Portfolio
-    const [items, setItems] = useState(Projects);
-    const projectCategories = [...new Set(Projects.map((val) => val.category))];
-    const [cat, setCat] = useState<string>('');
-    const projectsLen = Projects.length;
-    const itemsLen = items.length;
-    const FilterItem = (currCat) => {
-        const selection = Projects.filter((val) => {
-            // const key = index;
-            setCat(currCat);
-            return String(val.category) === currCat;
-        });
-        if (currCat === 'all') {
-            setItems(Projects); 
-        } else {
-            setItems(selection);
-    }};
-
-    // Contact
-    const { register, formState: { errors } } = useForm<FormData> ({
-        resolver: yupResolver(schema)
-    });
-    const form = useRef();
-    const sendEmail = (e) => {
-        e.preventDefault();
-        emailjs.sendForm('service_ofbf6mt', 'template_58ca9cw', form.current, import.meta.env.REACT_APP_EMAILJS)
-            .then(function(response) {
-            console.log('SUCCESS!', response.text);
-            // Redirect to home
-            return <Navigate to='/' replace={true} />;
-            }, function(error) {
-            console.log('FAILED...', error.text);
-            });
-    }
-
-    // Cookie consent
-    const LoadCookieConsent = () => {
-      return (
-        <>
-        <CookieConsent 
-          enableDeclineButton 
-          buttonText={'Accept'}
-          declineButtonText={'Decline'}
-          onAccept={() => {
-            ReactGA.initialize(
-              'G-R4RZ145T3T', {
-                gaOptions: {
-                  cookie_flags: 'SameSite=none; Secure'
+    const NavComponent = () => {
+        const [isScrolled, setScrolled] = useState(false);
+        useEffect(() => {
+            const handleScroll = () => {
+                if (window.scrollY > 50) {
+                    setScrolled(true);
+                } else {
+                    setScrolled(false);
                 }
-              }
-            );
-          }}
-          onDecline={() => {
-            alert('Cookie preferences saved.');
-          }}
-          style={{ fontFamily: theme.typography.fontFamily, position: 'fixed', top: '93%' }}
-        >
-          This website uses cookies.
-        </CookieConsent>
-        </>
-      );
-    }
-    
-    return (
-        <ThemeContext.Provider value={{ theme }}>
-            <div style={{ backgroundColor: theme.palette.background, width: '100%', margin: 0, padding: 0 }}>
+            };
+            window.addEventListener('scroll', handleScroll);
+            return () => {
+                window.removeEventListener('scroll', handleScroll);
+            };
+        }, []);
+        const [navIsHovered, navSetHovered] = useState(false);
+        const navHandleMouseEnter = () => {
+            navSetHovered(true);
+        };
+        const navHandleMouseLeave = () => {
+            navSetHovered(false);
+        };
+        return (
+            <>
                 <div className='nav-main-div' 
-                    onMouseEnter={() => navHandleMouseEnter()} 
-                    onMouseLeave={() => navHandleMouseLeave()}
-                    style={{ 
-                        zIndex: 10,
-                        display: 'flex', 
-                        width: '100%',
-                        borderBottom: cssString,
-                        position: 'fixed', 
-                        height: 50,
-                        overflow: 'hidden',
-                        backgroundColor: theme.palette.background,
-                        opacity: navIsHovered ? 1 : isScrolled ? 0.5 : 1,
-                        boxShadow: navIsHovered && isScrolled ? theme.palette.navShadow : isScrolled ? theme.palette.navShadow : ''
-                    }}
-                > 
-                    <Nav style={{ width: '100%' }}>
-                        <div style={{ color: theme.palette.color, marginLeft: '88vw', marginTop: '0.9vh', zIndex: 11, position: 'fixed' }}>
-                            <SpecsModal/>
-                        </div>
-                        <div style={{ color: theme.palette.color, marginLeft: '93vw', marginTop: '1.5vh', zIndex: 11, position: 'fixed' }}>
-                            <a style={{ textDecoration: 'None'}} href="https://openlineage.io/" target="_blank">
-                                <Avatar src={olBug} sx={{ height: '2.5vh' }}/>
-                            </a>
-                        </div>
-                        <div style={{ color: theme.palette.color, marginLeft: '97vw', marginTop: '1.3vh', zIndex: 11, position: 'fixed' }}>
-                            {theme === darkTheme ? 
-                                <LightModeIcon sx={{ cursor: 'pointer' }} onClick={() => switchTheme(theme)} /> :
-                                <DarkModeIcon sx={{ cursor: 'pointer' }} onClick={() => switchTheme(theme)} />
-                            }
-                        </div>
-                        <NavItem className='navitem'>
-                            <NavLink style={{ color: theme.palette.color, textDecoration: 'None' }}
-                                href="/#home"
-                            >
-                                <Button>
-                                    <HomeFilledIcon style={{ color: theme.palette.color }}/>
-                                </Button>
-                            </NavLink>
-                        </NavItem>
-                        <NavItem className='navitem'>                 
-                            <NavLink style={{ color: theme.palette.color, textDecoration: 'None' }}
-                                href="/#portfolio"
-                            >
-                                <Button>                    
-                                    <Typography className='btn-typo' style={{ 
-                                        color: theme.palette.color, 
-                                        fontFamily: theme.typography.fontFamily, 
-                                        textTransform: 'uppercase' 
-                                    }}>
-                                        Portfolio
-                                    </Typography>   
-                                </Button>
-                            </NavLink>
-                        </NavItem>
-                        <NavItem className='navitem'>                    
-                            <NavLink style={{ color: theme.palette.color, textDecoration: 'None' }}
-                                href="/#contact"
-                            >
-                                <Button>                    
-                                    <Typography className='btn-typo' style={{ 
-                                        color: theme.palette.color, 
-                                        fontFamily: theme.typography.fontFamily, 
-                                        textTransform: 'uppercase' 
-                                    }}>
-                                        Contact
-                                    </Typography>   
-                                </Button>
-                            </NavLink>
-                        </NavItem>
-                    </Nav>
-                </div>
-                <div id='home' className='main_div' style={{ backgroundColor: theme.palette.background, width: '100%', margin: 0, padding: 0 }}>
-                    <motion.div
-                        // initial={{ scale: 10 }} 
-                        // animate={{ scale: 1 }}
-                        // transition={{
-                        //     delay: 2.0,
-                        //     duration: 2.0,
-                        //     scale: { type: "ease" },
-                        //     opacity: { ease: "linear" },
-                        // }}
-                        // animate={{
-                        //     y: [0, 100, 0],
-                        //     transition: { ease: ["easeIn", "easeOut"] }
-                        // }}
+                        onMouseEnter={() => navHandleMouseEnter()} 
+                        onMouseLeave={() => navHandleMouseLeave()}
+                        style={{ 
+                            zIndex: 10,
+                            display: 'flex', 
+                            width: '100%',
+                            borderBottom: cssString,
+                            position: 'fixed', 
+                            height: 50,
+                            overflow: 'hidden',
+                            backgroundColor: theme.palette.background,
+                            opacity: navIsHovered ? 1 : isScrolled ? 0.5 : 1,
+                            boxShadow: navIsHovered && isScrolled ? theme.palette.navShadow : isScrolled ? theme.palette.navShadow : ''
+                        }}
                     >
-                        <Container style={{ zIndex: 0 , height: '100vh', width: '100vw', marginLeft: 0, marginRight: 0, paddingLeft: 0, paddingRight: 0   }}>
-                            <Row style={{ height: '100vh', width: '100vw' }}>
-                                <Col md='6'>
-                                    <Avatar
-                                        alt='Typewriter pic' 
-                                        sx={{
-                                            width: 400, 
-                                            height: 400,
-                                            top: '30vh',
-                                            left: '25vw',
-                                            border: theme === darkTheme ? borderCss : '',
-                                            boxShadow: theme.palette.avatarShadow,
-                                        }}                                    
-                                        onMouseEnter={() => handleMouseEnter()} 
-                                        onMouseLeave={() => handleMouseLeave()}
-                                        src={ isHovered ? negKarmaPic : karmaPic }
-                                    />
-                                </Col>
-                                <Col md='6'>
-                                    <Row style={{ height: 35, position: 'relative', top: '43vh' }}>
-                                        <Col md='12' className='text-left align-items-bottom'>
-                                            <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '3.25rem' }}>Michael Robinson</Typography>
-                                        </Col>
-                                    </Row>
-                                    <Row style={{ height: 35, position: 'relative', top: '45.5vh' }}>
-                                        <Col md='12' className='align-items-top text-left'>
-                                            <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '1.5rem' }}>Developer and Learning Technologist</Typography>
-                                        </Col>
-                                    </Row>
-                                    <Row style={{ height: 400, position: 'relative', top: '46vh', justifyContent: 'space-between', width: '30.5vw' }}> 
-                                        <a href='https://github.com/merobi-hub' target="_blank" style={{ color: theme.palette.color }}>
-                                            <GitHubIcon style={{ marginTop: 0, fontSize: '150%', marginLeft: '0.9vw' }} />
+                        <Nav style={{ width: '100%' }}>
+                            <div style={{ color: theme.palette.color, marginLeft: '88vw', marginTop: '0.9vh', zIndex: 11, position: 'fixed' }}>
+                                <SpecsModal/>
+                            </div>
+                            <div style={{ color: theme.palette.color, marginLeft: '93vw', marginTop: '1.5vh', zIndex: 11, position: 'fixed' }}>
+                                <a style={{ textDecoration: 'None'}} href="https://openlineage.io/" target="_blank">
+                                    <Avatar src={olBug} sx={{ height: '2.5vh' }}/>
+                                </a>
+                            </div>
+                            <div style={{ color: theme.palette.color, marginLeft: '97vw', marginTop: '1.3vh', zIndex: 11, position: 'fixed' }}>
+                                {theme === darkTheme ? 
+                                    <LightModeIcon sx={{ cursor: 'pointer' }} onClick={() => switchTheme(theme)} /> :
+                                    <DarkModeIcon sx={{ cursor: 'pointer' }} onClick={() => switchTheme(theme)} />
+                                }
+                            </div>
+                            <NavItem className='navitem'>
+                                <NavLink style={{ color: theme.palette.color, textDecoration: 'None' }}
+                                    href="/#home"
+                                >
+                                    <Button>
+                                        <HomeFilledIcon style={{ color: theme.palette.color }}/>
+                                    </Button>
+                                </NavLink>
+                            </NavItem>
+                            <NavItem className='navitem'>                 
+                                <NavLink style={{ color: theme.palette.color, textDecoration: 'None' }}
+                                    href="/#portfolio"
+                                >
+                                    <Button>                    
+                                        <Typography className='btn-typo' style={{ 
+                                            color: theme.palette.color, 
+                                            fontFamily: theme.typography.fontFamily, 
+                                            textTransform: 'uppercase' 
+                                        }}>
+                                            Portfolio
+                                        </Typography>   
+                                    </Button>
+                                </NavLink>
+                            </NavItem>
+                            <NavItem className='navitem'>                    
+                                <NavLink style={{ color: theme.palette.color, textDecoration: 'None' }}
+                                    href="/#contact"
+                                >
+                                    <Button>                    
+                                        <Typography className='btn-typo' style={{ 
+                                            color: theme.palette.color, 
+                                            fontFamily: theme.typography.fontFamily, 
+                                            textTransform: 'uppercase' 
+                                        }}>
+                                            Contact
+                                        </Typography>   
+                                    </Button>
+                                </NavLink>
+                            </NavItem>
+                        </Nav>
+                    </div>
+                </>
+            );
+    }
+
+    const SpecsModal = () => {
+        const [modalIsOpen, modalSetOpen] = useState(false);
+        const modalStyle = {
+          position: 'absolute',
+          top: '50px',
+          right: '0%',
+          width: 500,
+          bgcolor: 'background.paper',
+          border: '2px solid #000',
+          boxShadow: 24,
+          color: '#000000',
+          p: 4,
+          opacity: .50
+        };
+            return (
+                <>
+                    <div className="modal-div">
+                        <Button 
+                            style={{ color: theme.palette.color, fontFamily: theme.typography.fontFamily }} 
+                            onClick={() => modalSetOpen(true)}
+                        >About
+                        </Button>
+                        <Modal
+                            disablePortal
+                            open={modalIsOpen}
+                            onClose={() => modalSetOpen(false)}
+                            closeAfterTransition
+                            slots={{ backdrop: Backdrop }}
+                            slotProps={{
+                              backdrop: {
+                                timeout: 500,
+                              },
+                            }}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Fade in={modalIsOpen}>
+                                <Box sx={modalStyle}>
+                                    <span style={{ position: 'absolute', marginLeft: '83%', marginTop: '0' }}>
+                                        <a href='https://github.com/merobi-hub/dev-portfolio' style={{ color: '#000000' }}>
+                                            <GitHubIcon sx={{ marginTop: 0, fontSize: '150%' }} />
                                         </a>
-                                        <a href='https://www.linkedin.com/in/michael-robinson/' target="_blank" style={{ color: theme.palette.color }}>
-                                            <LinkedInIcon sx={{ marginTop: 0, fontSize: '150%' }} />
-                                        </a>
-                                        <a href={Resume} download='Robinson_resume' target="_blank" style={{ color: theme.palette.color }}>
-                                            <DownloadForOfflineIcon sx={{ marginTop: 0, fontSize: '150%' }} />
-                                        </a>
-                                        <a href='mailto:merobi@gmail.com' target="_blank" style={{ color: theme.palette.color }}>
-                                            <EmailIcon sx={{ marginTop: 0, fontSize: '150%', marginRight: '1vw' }}/>
-                                        </a>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        </Container>
-                    </motion.div>
-                    <LoadCookieConsent />
-                    <div id='portfolio' style={{ scrollMarginTop: 70, padding: 0, marginTop: 25, position: 'relative', width: '100%' }}>
+                                    </span>
+                                  <Typography className='btn-typo' sx={{ fontFamily: theme.typography.fontFamily }}>
+                                    Specs
+                                  </Typography>
+                                  <Typography id="modal-modal-description" sx={{ mt: 2, fontFamily: theme.typography.fontFamily }}>
+                                    Language: TypeScript <br/> Framework: React 19 <br/> Bundler: Vite <br/> Hosting: Firebase <br/> FE Libraries: MaterialUI, Reactstrap, Motion <br/> Analytics: GA4 <br/> Email service: EmailJS API<br/>
+                                  </Typography>
+                                </Box>
+                            </Fade>
+                        </Modal>
+                    </div>
+                </>
+            );
+        }
+
+    const Portfolio = () => {
+        const [items, setItems] = useState(Projects);
+        const projectCategories = [...new Set(Projects.map((val) => val.category))];
+        const [cat, setCat] = useState<string>('');
+        const projectsLen = Projects.length;
+        const itemsLen = items.length;
+        const FilterItem = (currCat) => {
+            const selection = Projects.filter((val) => {
+                // const key = index;
+                setCat(currCat);
+                return String(val.category) === currCat;
+            });
+            if (currCat === 'all') {
+                setItems(Projects); 
+            } else {
+                setItems(selection);
+        }};
+        return (
+            <>
+                <div id='portfolio' style={{ scrollMarginTop: 70, padding: 0, marginTop: 25, position: 'relative', width: '100%' }}>
                         <div style={{ display: 'flex', width: '100%', padding: 0, position: 'relative' }}>
                             <div style={{ display: 'flex', zIndex: 0, margin: '0 auto', padding: 0, width: '100vw' }}>
                                 <div style={{ width: '100%', zIndex: 1, marginBottom: 150 }}>
@@ -507,7 +400,34 @@ export default function App() {
                             </div>
                         </div>
                     </div>
-                    <div id='contact'>
+                </>
+            );
+    }
+
+    const ContactForm = () => {
+        const schema = yup.object().shape({
+            name: yup.string().required(),
+            email: yup.string().email(),
+            message: yup.string().required(),
+        });
+        const { register, formState: { errors } } = useForm<FormData> ({
+            resolver: yupResolver(schema)
+        });
+        const form = useRef();
+        const sendEmail = (e) => {
+            e.preventDefault();
+            emailjs.sendForm('service_ofbf6mt', 'template_58ca9cw', form.current, import.meta.env.REACT_APP_EMAILJS)
+                .then(function(response) {
+                console.log('SUCCESS!', response.text);
+                // Redirect to home
+                return <Navigate to='/' replace={true} />;
+                }, function(error) {
+                console.log('FAILED...', error.text);
+                });
+        }
+        return (
+            <>
+                <div id='contact'>
                         <div>
                             <div>
                                 <div style={{ marginTop: 140, paddingBottom: 140, backgroundColor: theme.palette.background }}>
@@ -592,6 +512,93 @@ export default function App() {
                             </script>
                         </div>
                     </div>
+                </>
+            );
+    }
+
+    const LoadCookieConsent = () => {
+      return (
+        <>
+            <CookieConsent 
+              enableDeclineButton 
+              buttonText={'Accept'}
+              declineButtonText={'Decline'}
+              onAccept={() => {
+                ReactGA.initialize(
+                  'G-R4RZ145T3T', {
+                    gaOptions: {
+                      cookie_flags: 'SameSite=none; Secure'
+                    }
+                  }
+                );
+              }}
+              onDecline={() => {
+                alert('Cookie preferences saved.');
+              }}
+              style={{ fontFamily: theme.typography.fontFamily, position: 'fixed', top: '93%' }}
+            >
+              This website uses cookies.
+            </CookieConsent>
+        </>
+      );
+    }
+    
+    return (
+        <ThemeContext.Provider value={{ theme }}>
+            <div style={{ backgroundColor: theme.palette.background, width: '100%', margin: 0, padding: 0 }}>
+                <NavComponent/>
+                <div id='home' className='main_div' style={{ backgroundColor: theme.palette.background, width: '100%', margin: 0, padding: 0 }}>
+                    <div>
+                        <Container style={{ zIndex: 0 , height: '100vh', width: '100vw', marginLeft: 0, marginRight: 0, paddingLeft: 0, paddingRight: 0   }}>
+                            <Row style={{ height: '100vh', width: '100vw' }}>
+                                <Col md='6'>
+                                    <Avatar
+                                        alt='Typewriter pic' 
+                                        sx={{
+                                            width: 400, 
+                                            height: 400,
+                                            top: '30vh',
+                                            left: '25vw',
+                                            border: theme === darkTheme ? borderCss : '',
+                                            boxShadow: theme.palette.avatarShadow,
+                                        }}                                    
+                                        onMouseEnter={() => handleMouseEnter()} 
+                                        onMouseLeave={() => handleMouseLeave()}
+                                        src={ isHovered ? negKarmaPic : karmaPic }
+                                    />
+                                </Col>
+                                <Col md='6'>
+                                    <Row style={{ height: 35, position: 'relative', top: '43vh' }}>
+                                        <Col md='12' className='text-left align-items-bottom'>
+                                            <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '3.15rem' }}>Michael Robinson</Typography>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ height: 35, position: 'relative', top: '45.5vh' }}>
+                                        <Col md='12' className='align-items-top text-left'>
+                                            <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '1.45rem' }}>Developer and Learning Technologist</Typography>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ height: 400, position: 'relative', top: '46vh', justifyContent: 'space-between', width: '30.5vw' }}> 
+                                        <a href='https://github.com/merobi-hub' target="_blank" style={{ color: theme.palette.color }}>
+                                            <GitHubIcon style={{ marginTop: 0, fontSize: '150%', marginLeft: '0.9vw' }} />
+                                        </a>
+                                        <a href='https://www.linkedin.com/in/michael-robinson/' target="_blank" style={{ color: theme.palette.color }}>
+                                            <LinkedInIcon sx={{ marginTop: 0, fontSize: '150%' }} />
+                                        </a>
+                                        <a href={Resume} download='Robinson_resume' target="_blank" style={{ color: theme.palette.color }}>
+                                            <DownloadForOfflineIcon sx={{ marginTop: 0, fontSize: '150%' }} />
+                                        </a>
+                                        <a href='mailto:merobi@gmail.com' target="_blank" style={{ color: theme.palette.color }}>
+                                            <EmailIcon sx={{ marginTop: 0, fontSize: '150%', marginRight: '1vw' }}/>
+                                        </a>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </div>
+                    <LoadCookieConsent/>
+                    <Portfolio/>
+                    <ContactForm/>
                 </div>
             </div>
         </ThemeContext.Provider>
