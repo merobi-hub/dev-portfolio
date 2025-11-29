@@ -1,15 +1,15 @@
 # Stateful Developer Portfolio Web App
 
 ## Languages
-- Typescript
+- TypeScript
 - HTML/CSS
 
-## Libraries
+## FE Libraries
 - Reactstrap
 - MaterialUI
 - ReactGA
 - EmailJS
-- React Router
+- Motion
 
 ## Infra
 - React 19
