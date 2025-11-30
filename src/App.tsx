@@ -25,9 +25,9 @@ import HomeFilledIcon from '@mui/icons-material/HomeFilled';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import Modal from '@mui/material/Modal';
+import { motion } from "motion/react"
 import ReactGA from 'react-ga4';
 import Typography from '@mui/material/Typography';
-import { motion } from "motion/react"
 import { useAnimationFrame } from "motion/react"
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -35,8 +35,9 @@ import './App.css?inline';
 import karmaPic from './assets/images/karma_typewriter.webp';
 import negKarmaPic from './assets/images/neg_karma_typewriter.webp';
 import olBug from './assets/images/ol-bug.png';
-import Resume from './assets/files/DevAdv_08112025_ATS_web.pdf';
 import { Projects } from './projects.tsx';
+import Resume from './assets/files/DevAdv_08112025_ATS_web.pdf';
+
 
 const ThemeContext = createContext();
 
@@ -88,6 +89,7 @@ const lightTheme = {
 export default function App() {
     const [theme, changeTheme] = useState(darkTheme);
     const [isHovered, setIsHovered] = useState(false);
+    const [navIsHovered, navSetHovered] = useState(false);
     const handleMouseEnter = () => {
         setIsHovered(true);
     };
@@ -552,46 +554,51 @@ export default function App() {
                         <Container style={{ zIndex: 0 , height: '100vh', width: '100vw', marginLeft: 0, marginRight: 0, paddingLeft: 0, paddingRight: 0   }}>
                             <Row style={{ height: '100vh', width: '100vw' }}>
                                 <Col md='6'>
-                                    <Avatar
-                                        alt='Typewriter pic' 
-                                        sx={{
-                                            width: 400, 
-                                            height: 400,
-                                            top: '30vh',
-                                            left: '25vw',
-                                            border: theme === darkTheme ? borderCss : '',
-                                            boxShadow: theme.palette.avatarShadow,
-                                        }}                                    
-                                        onMouseEnter={() => handleMouseEnter()} 
-                                        onMouseLeave={() => handleMouseLeave()}
-                                        src={ isHovered ? negKarmaPic : karmaPic }
-                                    />
+                                    <motion.div animate={{ translateX: '-12vw' }} transition={{ duration: 1, delay: 1 }}>
+                                        <Avatar
+                                            alt='Typewriter pic' 
+                                            sx={{
+                                                width: 400, 
+                                                height: 400,
+                                                top: '30vh',
+                                                left: '37vw',
+                                                border: theme === darkTheme ? borderCss : '',
+                                                boxShadow: theme.palette.avatarShadow,
+                                            }}                                    
+                                            onMouseEnter={() => handleMouseEnter()} 
+                                            onMouseLeave={() => handleMouseLeave()}
+                                            src={ isHovered ? negKarmaPic : karmaPic }
+                                        />
+                                    </motion.div>
                                 </Col>
                                 <Col md='6'>
-                                    <Row style={{ height: 35, position: 'relative', top: '43vh' }}>
-                                        <Col md='12' className='text-left align-items-bottom'>
-                                            <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '3.15rem' }}>Michael Robinson</Typography>
-                                        </Col>
-                                    </Row>
-                                    <Row style={{ height: 35, position: 'relative', top: '45.5vh' }}>
-                                        <Col md='12' className='align-items-top text-left'>
-                                            <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '1.45rem' }}>Developer and Learning Technologist</Typography>
-                                        </Col>
-                                    </Row>
-                                    <Row style={{ height: 400, position: 'relative', top: '46vh', justifyContent: 'space-between', width: '30.5vw' }}> 
-                                        <a href='https://github.com/merobi-hub' target="_blank" style={{ color: theme.palette.color }}>
-                                            <GitHubIcon style={{ marginTop: 0, fontSize: '150%', marginLeft: '0.9vw' }} />
-                                        </a>
-                                        <a href='https://www.linkedin.com/in/michael-robinson/' target="_blank" style={{ color: theme.palette.color }}>
-                                            <LinkedInIcon sx={{ marginTop: 0, fontSize: '150%' }} />
-                                        </a>
-                                        <a href={Resume} download='Robinson_resume' target="_blank" style={{ color: theme.palette.color }}>
-                                            <DownloadForOfflineIcon sx={{ marginTop: 0, fontSize: '150%' }} />
-                                        </a>
-                                        <a href='mailto:merobi@gmail.com' target="_blank" style={{ color: theme.palette.color }}>
-                                            <EmailIcon sx={{ marginTop: 0, fontSize: '150%', marginRight: '1vw' }}/>
-                                        </a>
-                                    </Row>
+                                    <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 2.5, delay: 2 }}>
+                                        <Row style={{ height: 35, position: 'relative', top: '43vh' }}>
+                                                <Col md='12' className='text-left align-items-bottom'>
+                                                    <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '3.15rem' }}>Michael Robinson</Typography>
+                                                </Col>
+                                            
+                                        </Row>
+                                        <Row style={{ height: 35, position: 'relative', top: '45.5vh' }}>
+                                            <Col md='12' className='align-items-top text-left'>
+                                                <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '1.45rem' }}>Developer and Learning Technologist</Typography>
+                                            </Col>
+                                        </Row>
+                                        <Row style={{ height: 400, position: 'relative', top: '46vh', justifyContent: 'space-between', width: '30.5vw' }}> 
+                                            <a href='https://github.com/merobi-hub' target="_blank" style={{ color: theme.palette.color }}>
+                                                <GitHubIcon style={{ marginTop: 0, fontSize: '150%', marginLeft: '0.9vw' }} />
+                                            </a>
+                                            <a href='https://www.linkedin.com/in/michael-robinson/' target="_blank" style={{ color: theme.palette.color }}>
+                                                <LinkedInIcon sx={{ marginTop: 0, fontSize: '150%' }} />
+                                            </a>
+                                            <a href={Resume} download='Robinson_resume' target="_blank" style={{ color: theme.palette.color }}>
+                                                <DownloadForOfflineIcon sx={{ marginTop: 0, fontSize: '150%' }} />
+                                            </a>
+                                            <a href='mailto:merobi@gmail.com' target="_blank" style={{ color: theme.palette.color }}>
+                                                <EmailIcon sx={{ marginTop: 0, fontSize: '150%', marginRight: '1vw' }}/>
+                                            </a>
+                                        </Row>
+                                    </motion.div>
                                 </Col>
                             </Row>
                         </Container>
