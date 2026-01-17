@@ -2,6 +2,28 @@ export type Project = Record<string | string, string>;
 
 export const Projects: Project[] = [
   {
+    id: 'ol_darkmode',
+    img_path: './images/ol_darkmode.png',
+    description_general: 'Landing page - OSS Contribution',
+    title: 'OpenLineage Dark Mode',
+    description_specific: 'Dark mode and switcher',
+    tools_1: 'Javascript, Docusaurus',
+    tools_2: 'CSS',
+    category: 'web',
+    links: {'openlineage': 'https://openlineage.io'}
+  },
+  {
+    id: 'ol_hero',
+    img_path: './images/ol_hero.png',
+    description_general: 'Landing page - OSS Contribution',
+    title: 'OpenLineage Animation',
+    description_specific: 'Animated Hero for Website',
+    tools_1: 'Javascript, Docusaurus',
+    tools_2: 'CSS, Motion',
+    category: 'web',
+    links: {'openlineage': 'https://openlineage.io'}
+  },
+  {
     id: 'hf_profile',
     img_path: './images/hf-profile.png',
     description_general: 'AI projects - OSS',
