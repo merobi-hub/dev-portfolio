@@ -291,7 +291,8 @@ export default function App() {
                     style={{ 
                         zIndex: 10,
                         display: 'flex', 
-                        width: '100%',
+                        width: '100vw',
+                        paddingLeft: '0.05vw',
                         borderBottom: cssString,
                         position: 'fixed', 
                         height: '5vh',
@@ -301,7 +302,7 @@ export default function App() {
                         boxShadow: navIsHovered && isScrolled ? theme.palette.navShadow : isScrolled ? theme.palette.navShadow : ''
                     }}
                 >
-                    <Nav style={{ width: '100%', display: 'flex', height: '100%', alignItems: 'center' }}>
+                    <Nav style={{ width: '100%', display: 'flex', height: '100%' }}>
                         <NavItem className='navitem'>
                             <NavLink style={{ color: theme.palette.color, textDecoration: 'None' }}
                                 href="/#home"
@@ -373,7 +374,7 @@ export default function App() {
                                 </nav>
                             </NavLink>
                         </NavItem>
-                        <NavItem style={{marginLeft: '87.5vw', index: 11, position: 'fixed', marginTop: 'auto', marginBottom: 'auto'}}>
+                        <NavItem style={{marginLeft: '87.5vw', index: 11, position: 'fixed', marginTop: 'auto', marginBottom: 'auto' }}>
                             <NavLink style={{ color: theme.palette.color, textDecoration: 'None' }}>
                                 <SpecsModal/>
                             </NavLink>
@@ -579,6 +580,8 @@ export default function App() {
                                                 }
                                                 onClick={() => FilterItem('all')}
                                                 size='small'
+                                                variant={theme.cardType}
+                                                elevation="10"
                                             >
                                             ALL
                                             </Button>
@@ -613,10 +616,9 @@ export default function App() {
                                 </Container>
                                 <Grid container margin='auto' rowSpacing={8} columnSpacing={4} paddingBottom={4} width='85%'>
                                     {items.map((project, index) => (
-                                        <Grid marginX='auto' justifyItems='top'>
+                                        <Grid marginX='auto' justifyItems='top' key={project.img_path}>
                                             <div md='12' sm className='col d-flex' style={{ marginTop: 60, justifyContent: 'space-evenly' }}>
                                                 <Card
-                                                    key={project.img_path}
                                                     component={motion.div}
                                                     initial={{ scale: 0.95 }} 
                                                     animate={{ scale: 1 }}
@@ -640,7 +642,7 @@ export default function App() {
                                                         title='Screenshot of app'
                                                     />
                                                     <CardContent>
-                                                        <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: 14, borderWidth: '0px 0px 1px 0px', borderStyle: 'solid', borderColor: 'light gray' }}>
+                                                        <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: 14, borderWidth: '0px 0px 1px 0px', borderStyle: 'solid', borderColor: '#ececec' }}>
                                                             {project.description_general}
                                                         </Typography>
                                                         <Typography variant='h5' component='h2' style={{ fontFamily: theme.typography.fontFamily }}>
@@ -1029,79 +1031,89 @@ export default function App() {
                         position: 'absolute' 
                     }}>
                         <Container id="fluid-container" fluid style={{ backgroundColor: theme.palette.background, zIndex: 3, height: '100vh', position: 'relative' }}>
-                            <Row style={{ backgroundColor: theme.palette.background, height: '100vh' }} className="d-flex align-items-center">
-                                <Col xs='5' className="d-flex justify-content-end" style={{ backgroundColor: theme.palette.background }}>
+                            <Row style={{ backgroundColor: theme.palette.background, height: '100vh' }} >
+                                <Col xs='5' className="d-flex justify-content-end align-items-center" style={{ backgroundColor: theme.palette.background }}>
                                     {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
-                                    <div>
-                                        <Box
-                                            sx={{
-                                                width: '26vw',
-                                                height: 'auto',
-                                                aspectRatio: '1/1'
-                                            }}
-                                        >
-                                            <Avatar
-                                                id='home-avatar'
-                                                alt='Typewriter pic' 
+                                    <Row style={{ height: '42vh' }} className="d-flex align-items-center">
+
+                                            <Box
                                                 sx={{
-                                                    height: '100%',
-                                                    width: '100%',
-                                                    border: theme === darkTheme ? borderCss : '',
-                                                    boxShadow: theme.palette.avatarShadow,
-                                                }}                                    
-                                                onMouseEnter={() => handleMouseEnterAvatar()}
-                                                onMouseLeave={() => handleMouseLeaveAvatar()}
-                                                src={ isHovered ? negKarmaPic : karmaPic }
-                                            />
-                                        </Box>
-                                    </div>
+                                                    width: '26vw',
+                                                    height: 'auto',
+                                                    aspectRatio: '1/1'
+                                                }}
+                                            >
+                                                <Avatar
+                                                    id='home-avatar'
+                                                    alt='Typewriter pic'
+                                                    sx={{
+                                                        height: '100%',
+                                                        width: '100%',
+                                                        border: theme === darkTheme ? borderCss : '',
+                                                        boxShadow: theme.palette.avatarShadow,
+                                                    }}
+                                                    onMouseEnter={() => handleMouseEnterAvatar()}
+                                                    onMouseLeave={() => handleMouseLeaveAvatar()}
+                                                    src={ isHovered ? negKarmaPic : karmaPic }
+                                                />
+                                            </Box>
+
+                                    </Row>
                                 </Col>
                                 <Col xs='7'>
-                                    <Row style={{ height: '50vh', width: '40vw'}}>
-                                        <Col className='d-flex flex-column justify-content-end'>
-                                            {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
-                                            <div>
-                                                <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '3.9vw' }}>
-                                                    Michael Robinson
-                                                </Typography>
-                                            </div>
+                                    <Row className="align-items-center">
+                                        <Col>
+                                            <Row style={{ height: '50vh', width: '40vw' }}>
+                                                <Col className='d-flex flex-column justify-content-end'>
+                                                    {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
+                                                    <Row>
+                                                        <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '3.8vw', marginLeft: '2vw' }}>
+                                                            Michael Robinson
+                                                        </Typography>
+                                                    </Row>
+                                                </Col>
+                                            </Row>
+                                            <Row style={{ height: '8vh', position: 'relative', width: '40vw' }}>
+                                                <Col style={{ marginTop: '0vh' }} className='d-flex flex-column text-left'>
+                                                    {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
+                                                    <Row>
+                                                        <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '1.74vw', marginLeft: '2vw' }}>
+                                                            Developer and Learning Technologist
+                                                        </Typography>
+                                                    </Row>
+                                                </Col>
+                                            </Row>
+                                            <Row style={{ height: 0, position: 'relative', width: '40vw', textAlign: 'top' }}>
+                                                <Col className='d-flex flex-column justify-content-end'>
+                                                    <Row style={{ justifyContent: 'space-between' }}>
+                                                        <a href='https://github.com/merobi-hub' target="_blank" style={{ color: theme.palette.color }}>
+                                                            {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
+                                                            <div>
+                                                                <GitHubIcon style={{ marginTop: 0, fontSize: '1.78vw', marginLeft: '2vw' }} />
+                                                            </div>
+                                                        </a>
+                                                        <a href='https://www.linkedin.com/in/michael-robinson/' target="_blank" style={{ color: theme.palette.color }}>
+                                                            {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
+                                                            <div>
+                                                                <LinkedInIcon sx={{ marginTop: 0, fontSize: '1.78vw' }} />
+                                                            </div>
+                                                        </a>
+                                                        <a href={Resume} download='Robinson_resume' target="_blank" style={{ color: theme.palette.color }}>
+                                                            {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
+                                                            <div>
+                                                                <DownloadForOfflineIcon sx={{ marginTop: 0, fontSize: '1.78vw' }} />
+                                                            </div>
+                                                        </a>
+                                                        <a href='mailto:merobi@gmail.com' target="_blank" style={{ color: theme.palette.color }}>
+                                                            {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
+                                                            <div>
+                                                                <EmailIcon sx={{ marginTop: 0, fontSize: '1.78vw', marginRight: '1vw' }}/>
+                                                            </div>
+                                                        </a>
+                                                    </Row>
+                                                </Col>
+                                            </Row>
                                         </Col>
-                                    </Row>
-                                    <Row style={{ height: '8vh', position: 'relative', width: '40vw' }}>
-                                        <Col style={{ marginTop: '0vh' }} className='d-flex flex-column text-left'>
-                                            {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
-                                            <div>
-                                                <Typography style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color, fontSize: '1.78vw' }}>
-                                                    Developer and Learning Technologist
-                                                </Typography>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                    <Row style={{ height: '42vh', position: 'relative', justifyContent: 'space-between', width: '40vw', textAlign: 'top' }}> 
-                                        <a href='https://github.com/merobi-hub' target="_blank" style={{ color: theme.palette.color }}>
-                                            {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
-                                            <div>
-                                                <GitHubIcon style={{ marginTop: 0, fontSize: '1.78vw', marginLeft: '0.9vw' }} />
-                                            </div>
-                                        </a>
-                                        <a href='https://www.linkedin.com/in/michael-robinson/' target="_blank" style={{ color: theme.palette.color }}>
-                                            {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
-                                            <div>
-                                                <LinkedInIcon sx={{ marginTop: 0, fontSize: '1.78vw' }} />
-                                            </div>
-                                        </a>
-                                        <a href={Resume} download='Robinson_resume' target="_blank" style={{ color: theme.palette.color }}>
-                                            {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
-                                            <div>
-                                                <DownloadForOfflineIcon sx={{ marginTop: 0, fontSize: '1.78vw' }} />
-                                            </div>
-                                        </a>
-                                        <a href='mailto:merobi@gmail.com' target="_blank" style={{ color: theme.palette.color }}>
-                                            {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
-                                            <div>
-                                                <EmailIcon sx={{ marginTop: 0, fontSize: '1.78vw', marginRight: '1vw' }}/>
-                                            </div>
-                                        </a>
                                     </Row>
                                 </Col>
                             </Row>
