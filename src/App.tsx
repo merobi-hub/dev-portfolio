@@ -1,5 +1,5 @@
+import React from 'react';
 import { createContext, useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom';
 import { Nav, NavItem, NavLink, Col, Row, Container } from 'reactstrap';
 import { Navigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -19,7 +19,6 @@ import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import EmailIcon from '@mui/icons-material/Email';
 import emailjs from '@emailjs/browser';
 import Fade from '@mui/material/Fade';
-// import { storage } from "./firebase.ts";
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Grid from '@mui/material/Grid';
 import HomeFilledIcon from '@mui/icons-material/HomeFilled';
@@ -29,7 +28,6 @@ import Modal from '@mui/material/Modal';
 import { motion } from "motion/react"
 import ReactGA from 'react-ga4';
 import Typography from '@mui/material/Typography';
-import { useAnimationFrame } from "motion/react"
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import './App.css?inline';
@@ -38,7 +36,6 @@ import negKarmaPic from './assets/images/neg_karma_typewriter.webp';
 import olBug from './assets/images/ol-bug.png';
 import { Projects } from './projects.tsx';
 import Resume from './assets/files/DevAdv_08112025_ATS_web.pdf';
-import cc from './assets/images/creative-commons-logo-png-transparent.png';
 import ccrainbow from './assets/images/creativecommonsrainbow.png';
 
 import amberWavesPic from './assets/images/amber_waves.webp';
@@ -218,7 +215,6 @@ const lightTheme = {
 //             style={{
 //                 backgroundSize: 'cover',
 //                 backgroundRepeat: 'no-repeat',
-//                 backgroundColor: '#000',
 //                 backgroundImage: `url(${selectBg()})`, 
 //                 position: 'fixed', 
 //                 height: !discoOpac ? 0 : '100vh', 
@@ -235,36 +231,35 @@ const lightTheme = {
 
 
 export default function App() {
-    const [showFoto, setShowFoto] = useState(false);
-    const [theme, changeTheme] = useState(darkTheme);
-    const [isHovered, setIsHovered] = useState(false);
-    const [navIsHovered, navSetHovered] = useState(false);
+    const [showFoto, setShowFoto] = useState<null | BOOL>(false);
+    const [theme, changeTheme] = useState<null | FUNCTION>(darkTheme);
+    const [isHovered, setIsHovered] = useState<null | BOOL>(false);
     function handleMouseEnterAvatar() {
         setIsHovered(true);
     };
     function handleMouseLeaveAvatar() {
         setIsHovered(false);
     };
-    function switchTheme(currMode) {
+    function switchTheme(currMode: object) {
         if (currMode === darkTheme) { 
             changeTheme(lightTheme);
         } else { 
             changeTheme(darkTheme);
     }};
-    const borderCss = '5px solid '+theme.palette.border;
-    const cssString = '1px solid '+theme.palette.border;
+    const borderCss: string = '5px solid '+theme.palette.border;
+    const cssString: string = '1px solid '+theme.palette.border;
 
     function NavComponent() {
-        const [isFotoHovered, setFotoHovered] = useState(false);
-        const handleMouseEnterHover = () => {
+        const [isFotoHovered, setFotoHovered] = useState<null | BOOL>(false);
+        function handleMouseEnterHover() {
             setFotoHovered(true);
         }
-        const handleMouseLeaveHover = () => {
+        function handleMouseLeaveHover() {
             setFotoHovered(false);
         }
-        const [isScrolled, setScrolled] = useState(false);
+        const [isScrolled, setScrolled] = useState<null | BOOL>(false);
         useEffect(() => {
-            const handleScroll = () => {
+            function handleScroll() {
                 if (window.scrollY > 50) {
                     setScrolled(true);
                 } else {
@@ -276,7 +271,7 @@ export default function App() {
                 window.removeEventListener('scroll', handleScroll);
             };
         }, []);
-        const [navIsHovered, navSetHovered] = useState(false);
+        const [navIsHovered, navSetHovered] = useState<null | BOOL>(false);
         function navHandleMouseEnter() {
             navSetHovered(true);
         };
@@ -297,7 +292,6 @@ export default function App() {
                         position: 'fixed', 
                         height: '5vh',
                         overflow: 'hidden',
-                        backgroundColor: theme.palette.background,
                         opacity: navIsHovered ? 1 : isScrolled ? 0.5 : 1,
                         boxShadow: navIsHovered && isScrolled ? theme.palette.navShadow : isScrolled ? theme.palette.navShadow : ''
                     }}
@@ -397,20 +391,19 @@ export default function App() {
     }
 
     function CopyLeftModal() {
-        const hasExec = useRef(false);    
-        const [copyModalIsOpen, copyModalSet] = useState(true);
-        const handleClick = () => {
+        const hasExec = useRef<null | BOOL>(false);
+        const [copyModalIsOpen, copyModalSet] = useState<null | BOOL>(true);
+        function handleClick() {
             copyModalSet(false);
             hasExec.current = true;
         }
-        const borderStr = '1px solid '+theme.palette.color
+        const borderStr: string = '1px solid '+theme.palette.color
         if (!hasExec.current) {
             return (
                 <>  
                     <div 
                         id="copy-left-div"
                         style={{
-                            backgroundColor: theme.palette.background,
                             position: 'absolute',
                             display: !copyModalIsOpen ? 'none' : 'inherit', 
                             marginTop: '5vh',
@@ -425,7 +418,7 @@ export default function App() {
                             paddingLeft: '1.2vw',
                             fontFamily: theme.typography.fontFamily,
                         }}>
-                        <span><img style={{ height: '3.6vh', width: 'auto' }} src={ccrainbow}/></span> Photography CC BY-SA Michael Robinson 2025
+                        <span><img style={{ height: '3.6vh', width: 'auto' }} src={ccrainbow}/></span> Photography CC BY-SA Michael Robinson 2026
                     </div>
                     <div style={{ width: '100vw', display: 'flex', height: '4.5vh', justifyContent: 'right' }}>
                         <Button
@@ -437,7 +430,6 @@ export default function App() {
                                 width: '3.8vw',
                                 height: '4.5vh',
                                 opacity: 1,
-                                // backgroundColor: theme.palette.background,
                                 // borderColor: theme.palette.color,
                                 // borderWidth: '1px',
                                 // borderStyle: 'solid',
@@ -457,8 +449,8 @@ export default function App() {
     }
 
     function SpecsModal() {
-        const [modalIsOpen, modalSetOpen] = useState(false);
-        const modalStyle = {
+        const [modalIsOpen, modalSetOpen] = useState<null | BOOL>(false);
+        const modalStyle: object = {
           position: 'absolute',
           top: '5vh',
           right: '0%',
@@ -523,38 +515,34 @@ export default function App() {
     }
 
     function Portfolio() {
-        const itemsPerLoad = 4;
-        const [items, setItems] = useState(Projects.slice(0, itemsPerLoad));
-        const [nextIndex, setNextIndex] = useState(itemsPerLoad);
-        const [hasMore, setHasMore] = useState(true);
-        const projectCategories = [...new Set(Projects.map((val) => val.category))];
-        const [cat, setCat] = useState<string>('');
-        const projectsLen = Projects.length;
-        const itemsLen = items.length;
-        const handleLoadMore = () => {
+        const itemsPerLoad: int = 4;
+        const [nextIndex, setNextIndex] = useState<null | INT>(itemsPerLoad);
+        const [items, setItems] = useState<null | ARRAY<object>>(Projects);
+        const visibleItems: array<object> = items.slice(0, nextIndex);
+        const projectCategories: array<string> = [...new Set(Projects.map((val) => val.category))];
+        const [cat, setCat] = useState<null | STRING>('');
+        const projectsLen: int = Projects.length;
+        const itemsLen: int = items.length;
+        const lastInd: int = items.length - 1;
+        function handleLoadMore() {
             const newIndex = nextIndex + itemsPerLoad;
-            const newVisibleItems = [...items, ...Projects.slice(nextIndex, newIndex)];
-            setItems(newVisibleItems);
             setNextIndex(newIndex);
-            if (newIndex >= Projects.length) {
-                setHasMore(false);
-            }
         };
         function FilterItem(currCat) {
             const selection = Projects.filter((val) => {
-                // const key = index;
-                setCat(currCat);
                 return String(val.category) === currCat;
             });
+            setCat(currCat);
             if (currCat === 'all') {
                 setItems(Projects); 
             } else {
                 setItems(selection);
+            setNextIndex(4);
         }};
         return (
             <>
-                <div id='portfolio' style={{ backgroundColor: theme.palette.background, scrollMarginTop: 70, padding: 0, marginTop: 0, position: 'relative', width: '100%' }}>
-                    <div style={{ display: 'flex', width: '100%', padding: 0, position: 'relative', backgroundColor: theme.palette.background }}>
+                <div id='portfolio' style={{ scrollMarginTop: 70, padding: 0, marginTop: 0, position: 'relative', width: '100%' }}>
+                    <div style={{ display: 'flex', width: '100%', padding: 0, position: 'relative' }}>
                         <div style={{ display: 'flex', zIndex: 0, margin: '0 auto', padding: 0, width: '100vw', backgroundColor: theme.palette.background }}>
                             <div style={{ width: '100%', zIndex: 1, marginBottom: 150, backgroundColor: theme.palette.background }}>
                                 <div style={{ textAlign: 'center' }}>
@@ -615,9 +603,9 @@ export default function App() {
                                     </Row>
                                 </Container>
                                 <Grid container margin='auto' rowSpacing={8} columnSpacing={4} paddingBottom={4} width='85%'>
-                                    {items.map((project, index) => (
+                                    {visibleItems.map((project) => (
                                         <Grid marginX='auto' justifyItems='top' key={project.img_path}>
-                                            <div md='12' sm className='col d-flex' style={{ marginTop: 60, justifyContent: 'space-evenly' }}>
+                                            <div className='col d-flex' style={{ marginTop: 60, justifyContent: 'space-evenly' }}>
                                                 <Card
                                                     component={motion.div}
                                                     initial={{ scale: 0.95 }} 
@@ -628,7 +616,7 @@ export default function App() {
                                                         maxWidth: 500, 
                                                         minHeight: 550, 
                                                         marginTop: 7, 
-                                                        backgroundColor: theme.palette.background, 
+                                                        backgroundColor: theme.palette.background,
                                                         color: theme.palette.color, 
                                                         borderColor: theme.palette.border,
                                                         borderWidth: '2px',
@@ -637,6 +625,7 @@ export default function App() {
                                                     elevation='10'
                                                 >                                  
                                                     <CardMedia 
+                                                        key={project.img_path}
                                                         sx={{ height: '20em'}}
                                                         image={project.img_path}
                                                         title='Screenshot of app'
@@ -675,9 +664,8 @@ export default function App() {
                                             </div>
                                         </Grid>
                                     ))}
-                                    
                                 </Grid>
-                                {hasMore && (
+                                {lastInd >= nextIndex ? (
                                     <div style={{ width: '100vw', display: 'flex', paddingTop: '4vh' }}>
                                         <Button 
                                             variant='outlined'
@@ -687,7 +675,7 @@ export default function App() {
                                             Load More
                                         </Button>
                                     </div>
-                                )}
+                                ): <div></div>}
                             </div>
                         </div>
                     </div>
@@ -697,7 +685,7 @@ export default function App() {
     }
 
     function ContactForm() {
-        const schema = yup.object().shape({
+        const schema: object = yup.object().shape({
             name: yup.string().required(),
             email: yup.string().email(),
             message: yup.string().required(),
@@ -722,7 +710,7 @@ export default function App() {
                 <div id='contact'>
                     <div style={{ paddingTop: 140, paddingBottom: 140, backgroundColor: theme.palette.background }}>
                         <div className='justify-content-md-center' style={{ width: '100%' }}>
-                            <div className='col display-flex' md='12'>
+                            <div className='col display-flex'>
                                 <Card 
                                     variant={theme.cardType} 
                                     sx={{ 
@@ -806,12 +794,11 @@ export default function App() {
 
     function FotoGallery() {
         if (showFoto) {
-            const fotosPerLoad = 9;
-            const [modalIsOpen, setModalOpen] = useState(false);
-            let id = 0;
-            const hasRun = useRef(false);
+            const fotosPerLoad: int = 9;
+            const [modalIsOpen, setModalOpen] = useState<null | BOOL>(false);
+            let id: int = 0;
             function createStateVars() {
-                const stateVars = [];
+                const stateVars: object = [];
                 for (const f of bgArray) {
                     const item = {};
                     const fStr = f.toString();
@@ -823,28 +810,28 @@ export default function App() {
                 }
                 return (stateVars);
             }
-            const initialFotos = createStateVars();
-            const [fotos, setFotos] = useState(initialFotos);
-            const [fModal, setFModal] = useState('');
+            const initialFotos: object = createStateVars();
+            const [fotos, setFotos] = useState<null | FUNCTION>(initialFotos);
+            const [fModal, setFModal] = useState<null | STRING>('');
             const [displayFotos, setDisplayFotos] = useState(fotos.slice(0, fotosPerLoad));
-            const [nextIndex, setNextIndex] = useState(fotosPerLoad);
-            const [hasMore, setHasMore] = useState(true);
-            const handleLoadMore = () => {
-                const newIndex = nextIndex + fotosPerLoad;
-                const newVisibleItems = [...displayFotos, ...fotos.slice(nextIndex, newIndex)];
+            const [nextIndex, setNextIndex] = useState<null | INT>(fotosPerLoad);
+            const [hasMore, setHasMore] = useState<null | BOOL>(true);
+            function handleLoadMore() {
+                const newIndex: int = nextIndex + fotosPerLoad;
+                const newVisibleItems: object = [...displayFotos, ...fotos.slice(nextIndex, newIndex)];
                 setDisplayFotos(newVisibleItems);
                 setNextIndex(newIndex);
                 if (newIndex >= fotos.length) {
                     setHasMore(false);
                 }
             };
-            const handleClick = (id, name) => {
-                const index = displayFotos.findIndex(foto => foto.id === id);
+            function handleClick(id: string, name: string) {
+                const index: int = displayFotos.findIndex(foto => foto.id === id);
                 displayFotos[index].active = true
                 setFModal(name);
                 setModalOpen(true);
             }
-            const FotoModal = (uri) => {
+            function FotoModal(uri) {
                 return (
                     <>
                         <Modal
@@ -864,7 +851,7 @@ export default function App() {
                     </>
                 );
             }
-            const FotoTitle = () => {
+            function FotoTitle() {
                 return (
                     <div 
                         id="foto"
@@ -883,7 +870,7 @@ export default function App() {
 
             return (
                 <>
-                    <FotoTitle/>
+                    <FotoTitle />
                     <div style={{ display: 'flex', width: '100vw', backgroundColor: theme.palette.background }}>
                         <Grid
                             container
@@ -894,10 +881,9 @@ export default function App() {
                             width='85%'
                         >
                             {displayFotos.map((foto) => (
-                                <Grid marginX='auto' justifyItems='top'>
+                                <Grid marginX='auto' justifyItems='top' key={foto.id}>
                                     <div>
                                         <motion.div
-                                            key={foto.id}
                                             id="gallery-img-div"
                                             style={{
                                                 marginTop: 60,
@@ -1086,25 +1072,25 @@ export default function App() {
                                             <Row style={{ height: 0, position: 'relative', width: '40vw', textAlign: 'top' }}>
                                                 <Col className='d-flex flex-column justify-content-end'>
                                                     <Row style={{ justifyContent: 'space-between' }}>
-                                                        <a href='https://github.com/merobi-hub' target="_blank" style={{ color: theme.palette.color }}>
+                                                        <a href='https://github.com/merobi-hub' target="_blank" style={{ color: theme.palette.color }} rel="noreferrer">
                                                             {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
                                                             <div>
                                                                 <GitHubIcon style={{ marginTop: 0, fontSize: '1.78vw', marginLeft: '2vw' }} />
                                                             </div>
                                                         </a>
-                                                        <a href='https://www.linkedin.com/in/michael-robinson/' target="_blank" style={{ color: theme.palette.color }}>
+                                                        <a href='https://www.linkedin.com/in/michael-robinson/' target="_blank" style={{ color: theme.palette.color }} rel="noreferrer">
                                                             {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
                                                             <div>
                                                                 <LinkedInIcon sx={{ marginTop: 0, fontSize: '1.78vw' }} />
                                                             </div>
                                                         </a>
-                                                        <a href={Resume} download='Robinson_resume' target="_blank" style={{ color: theme.palette.color }}>
+                                                        <a href={Resume} download='Robinson_resume' target="_blank" style={{ color: theme.palette.color }} rel="noreferrer">
                                                             {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
                                                             <div>
                                                                 <DownloadForOfflineIcon sx={{ marginTop: 0, fontSize: '1.78vw' }} />
                                                             </div>
                                                         </a>
-                                                        <a href='mailto:merobi@gmail.com' target="_blank" style={{ color: theme.palette.color }}>
+                                                        <a href='mailto:merobi@gmail.com' target="_blank" style={{ color: theme.palette.color }} rel="noreferrer">
                                                             {/*<motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 20, delay: 0 }}>*/}
                                                             <div>
                                                                 <EmailIcon sx={{ marginTop: 0, fontSize: '1.78vw', marginRight: '1vw' }}/>
