@@ -58,6 +58,7 @@ import caveMotionPic from './assets/images/cave_motion.webp';
 import cherokeeRestSignPic from './assets/images/cherokee_rest_sign.webp';
 import cherokeeTradingPic from './assets/images/cherokee_trading.webp';
 import downtownLaBwPic from './assets/images/downtown_la_bw.webp';
+import fotoBg from './assets/images/fotoBg.png';
 import fotoShopPic from './assets/images/foto_shop.webp';
 import futbolCelebrationPic from './assets/images/futbol_celebration.webp';
 import futbolFansCarPic from './assets/images/futbol_fans_car.webp';
@@ -287,17 +288,18 @@ export default function App() {
                         zIndex: 10,
                         display: 'flex', 
                         width: '100vw',
-                        paddingLeft: '0.05vw',
+                        paddingLeft: '10px',
                         borderBottom: cssString,
                         position: 'fixed', 
                         height: '5vh',
+                        // lineHeight: '5vh',
                         overflow: 'hidden',
                         opacity: navIsHovered ? 1 : isScrolled ? 0.5 : 1,
                         boxShadow: navIsHovered && isScrolled ? theme.palette.navShadow : isScrolled ? theme.palette.navShadow : ''
                     }}
                 >
-                    <Nav style={{ width: '100%', display: 'flex', height: '100%' }}>
-                        <NavItem className='navitem'>
+                    <Nav style={{ width: '100%', display: 'flex', height: '5vh' }}>
+                        <NavItem style={{ display: 'flex', alignSelf: 'center', paddingTop: 0 }}>
                             <NavLink style={{ color: theme.palette.color, textDecoration: 'None' }}
                                 href="/#home"
                             >
@@ -306,7 +308,7 @@ export default function App() {
                                 </Button>
                             </NavLink>
                         </NavItem>
-                        <NavItem className='navitem'>                 
+                        <NavItem style={{ display: 'flex', alignSelf: 'center', paddingTop: 0 }}>                 
                             <NavLink style={{ color: theme.palette.color, textDecoration: 'None' }}
                                 href="/#portfolio"
                             >
@@ -323,7 +325,7 @@ export default function App() {
                                 </Button>
                             </NavLink>
                         </NavItem>
-                        <NavItem className='navitem'>                    
+                        <NavItem style={{ display: 'flex', alignSelf: 'center', paddingTop: 0 }}>                    
                             <NavLink style={{ color: theme.palette.color, textDecoration: 'None' }}
                                 href="/#contact"
                             >
@@ -340,35 +342,32 @@ export default function App() {
                                 </Button>
                             </NavLink>
                         </NavItem>
-                        <NavItem style={{ marginLeft: '83.5vw', index: 11, position: 'fixed' }}>
+                        <NavItem style={{ position: 'fixed', alignSelf: 'center', marginLeft: '83.5vw', index: 11 }}>
                             <NavLink
                                 style={{ color: theme.palette.color, textDecoration: 'None' }}
                                 href="/#foto"
+                                onMouseEnter={handleMouseEnterHover}
+                                onMouseLeave={handleMouseLeaveHover}
                             >
-                                <nav 
-                                    onMouseEnter={handleMouseEnterHover}
-                                    onMouseLeave={handleMouseLeaveHover}
+                                <Button 
+                                    onClick={()=>setShowFoto(true)}
+                                    // style={{ borderStyle: !isFotoHovered ? '' : 'solid', borderWidth: '1px', borderColor: theme.palette.border }}
                                 >
-                                    <Button 
-                                        onClick={()=>setShowFoto(true)}
-                                        // style={{ borderStyle: !isFotoHovered ? '' : 'solid', borderWidth: '1px', borderColor: theme.palette.border }}
-                                    >
 
-                                        <Typography
-                                            className='btn-typo'
-                                            style={{
-                                                display: !isFotoHovered ? 'none' : '',
-                                                color: theme.palette.color,
-                                                fontFamily: theme.typography.fontFamily,
-                                                textTransform: 'uppercase',
-                                            }}>
-                                            Foto
-                                        </Typography>
-                                    </Button>
-                                </nav>
+                                    <Typography
+                                        className='btn-typo'
+                                        style={{
+                                            display: isFotoHovered ? '' : 'none',
+                                            color: theme.palette.color,
+                                            fontFamily: theme.typography.fontFamily,
+                                            textTransform: 'uppercase',
+                                        }}>
+                                        Foto
+                                    </Typography>
+                                </Button>
                             </NavLink>
                         </NavItem>
-                        <NavItem style={{marginLeft: '87.5vw', index: 11, position: 'fixed', marginTop: 'auto', marginBottom: 'auto' }}>
+                        <NavItem style={{ display: 'flex', alignSelf: 'center', marginLeft: '87.5vw', index: 11, position: 'fixed' }}>
                             <NavLink style={{ color: theme.palette.color, textDecoration: 'None' }}>
                                 <SpecsModal/>
                             </NavLink>
@@ -405,7 +404,7 @@ export default function App() {
                         id="copy-left-div"
                         style={{
                             position: 'absolute',
-                            display: !copyModalIsOpen ? 'none' : 'inherit', 
+                            display: !copyModalIsOpen ? 'none' : 'flex', 
                             marginTop: '5vh',
                             width: '100vw',
                             opacity: 1,
@@ -414,13 +413,14 @@ export default function App() {
                             color: theme.palette.color,
                             zIndex: 9,
                             height: '5vh',
-                            lineHeight: '5vh',
-                            paddingLeft: '1.2vw',
+                            alignItems: 'center',
+                            // lineHeight: '5vh',
+                            paddingLeft: '30px',
                             fontFamily: theme.typography.fontFamily,
                         }}>
                         <span><img style={{ height: '3.6vh', width: 'auto' }} src={ccrainbow}/></span> Photography CC BY-SA Michael Robinson 2026
                     </div>
-                    <div style={{ width: '100vw', display: 'flex', height: '4.5vh', justifyContent: 'right' }}>
+                    <div style={{ width: '100vw', display: 'flex', height: '5vh', justifyContent: 'right' }}>
                         <Button
                             id="copy-btn"
                             style={{
@@ -464,52 +464,50 @@ export default function App() {
         };
             return (
                 <>
-                    <div className="modal-div">
-                        <Button 
-                            style={{ color: theme.palette.color, fontFamily: theme.typography.fontFamily, fontSize: '1rem' }}
-                            onClick={() => modalSetOpen(true)}
-                        >
-                            <Typography
-                                className='btn-typo'
-                                style={{
-                                    color: theme.palette.color,
-                                    fontFamily: theme.typography.fontFamily,
-                                    textTransform: 'uppercase'
-                                }}>
-                                    About
-                            </Typography>
-                        </Button>
-                        <Modal
-                            disablePortal
-                            open={modalIsOpen}
-                            onClose={() => modalSetOpen(false)}
-                            closeAfterTransition
-                            slots={{ backdrop: Backdrop }}
-                            slotProps={{
-                              backdrop: {
-                                timeout: 500,
-                              },
-                            }}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                        >
-                            <Fade in={modalIsOpen}>
-                                <Box sx={modalStyle}>
-                                    <span style={{ position: 'absolute', marginLeft: '83%', marginTop: '0' }}>
-                                        <a href='https://github.com/merobi-hub/dev-portfolio' style={{ color: '#000' }}>
-                                            <GitHubIcon sx={{ marginTop: 0, fontSize: '150%' }} />
-                                        </a>
-                                    </span>
-                                  <Typography className='btn-typo' sx={{ fontFamily: theme.typography.fontFamily }}>
-                                    Specs
-                                  </Typography>
-                                  <Typography id="modal-modal-description" sx={{ mt: 2, fontFamily: theme.typography.fontFamily }}>
-                                    Language: TypeScript <br/> Framework: React 19 <br/> Bundler: Vite <br/> Hosting: Firebase <br/> FE Libraries: MaterialUI, Reactstrap, Motion <br/> Analytics: GA4 <br/> Email service: EmailJS API<br/>
-                                  </Typography>
-                                </Box>
-                            </Fade>
-                        </Modal>
-                    </div>
+                    <Button 
+                        style={{ color: theme.palette.color, fontFamily: theme.typography.fontFamily, fontSize: '1rem' }}
+                        onClick={() => modalSetOpen(true)}
+                    >
+                        <Typography
+                            className='btn-typo'
+                            style={{
+                                color: theme.palette.color,
+                                fontFamily: theme.typography.fontFamily,
+                                textTransform: 'uppercase'
+                            }}>
+                                About
+                        </Typography>
+                    </Button>
+                    <Modal
+                        disablePortal
+                        open={modalIsOpen}
+                        onClose={() => modalSetOpen(false)}
+                        closeAfterTransition
+                        slots={{ backdrop: Backdrop }}
+                        slotProps={{
+                          backdrop: {
+                            timeout: 500,
+                          },
+                        }}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Fade in={modalIsOpen}>
+                            <Box sx={modalStyle}>
+                                <span style={{ position: 'absolute', marginLeft: '83%', marginTop: '0' }}>
+                                    <a href='https://github.com/merobi-hub/dev-portfolio' style={{ color: '#000' }}>
+                                        <GitHubIcon sx={{ marginTop: 0, fontSize: '150%' }} />
+                                    </a>
+                                </span>
+                              <Typography className='btn-typo' sx={{ fontFamily: theme.typography.fontFamily }}>
+                                Specs
+                              </Typography>
+                              <Typography id="modal-modal-description" sx={{ mt: 2, fontFamily: theme.typography.fontFamily }}>
+                                Language: TypeScript <br/> Framework: React 19 <br/> Bundler: Vite <br/> Hosting: Firebase <br/> FE Libraries: MaterialUI, Reactstrap, Motion <br/> Analytics: GA4 <br/> Email service: EmailJS API<br/>
+                              </Typography>
+                            </Box>
+                        </Fade>
+                    </Modal>
                 </>
             );
     }
@@ -888,7 +886,7 @@ export default function App() {
                                             style={{
                                                 marginTop: 60,
                                                 display: 'flex',
-                                                backgroundColor: '#555',
+                                                backgroundImage: `url(${fotoBg})`,
                                                 height: '29vh',
                                                 width: '100%',
                                                 cursor: 'pointer',
