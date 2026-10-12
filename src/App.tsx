@@ -299,7 +299,7 @@ export default function App() {
                     }}
                 >
                     <Nav style={{ width: '100%', display: 'flex', height: '5vh' }}>
-                        <NavItem style={{ display: 'flex', alignSelf: 'center', paddingTop: 0 }}>
+                        <NavItem style={{ display: 'flex', alignItems: 'center', paddingBottom: '4px', height: '98%', marginTop: 'auto', marginBottom: 'auto' }}>
                             <NavLink style={{ color: theme.palette.color, textDecoration: 'None' }}
                                 href="/#home"
                             >
@@ -349,11 +349,7 @@ export default function App() {
                                 onMouseEnter={handleMouseEnterHover}
                                 onMouseLeave={handleMouseLeaveHover}
                             >
-                                <Button 
-                                    onClick={()=>setShowFoto(true)}
-                                    // style={{ borderStyle: !isFotoHovered ? '' : 'solid', borderWidth: '1px', borderColor: theme.palette.border }}
-                                >
-
+                                <Button onClick={()=>setShowFoto(true)}>
                                     <Typography
                                         className='btn-typo'
                                         style={{
@@ -372,7 +368,17 @@ export default function App() {
                                 <SpecsModal/>
                             </NavLink>
                         </NavItem>
-                        <NavItem style={{ display: 'flex', height: '5vh', alignItems: 'center', marginTop: 'auto', marginBottom: 'auto', color: theme.palette.color, marginLeft: '92.5vw', zIndex: 11, position: 'fixed' }}>
+                        <NavItem style={{ 
+                            display: 'flex', 
+                            height: '5vh', 
+                            alignItems: 'center', 
+                            marginTop: 'auto', 
+                            marginBottom: 'auto', 
+                            color: theme.palette.color, 
+                            marginLeft: '92.5vw', 
+                            zIndex: 11, 
+                            position: 'fixed' 
+                        }}>
                             <NavLink href="https://openlineage.io/" style={{ textDecoration: 'None' }}>
                                 <Avatar src={olBug} sx={{ height: '2.5vh' }}/>
                             </NavLink>
@@ -400,24 +406,21 @@ export default function App() {
         if (!hasExec.current) {
             return (
                 <>  
-                    <div 
-                        id="copy-left-div"
-                        style={{
-                            position: 'absolute',
-                            display: !copyModalIsOpen ? 'none' : 'flex', 
-                            marginTop: '5vh',
-                            width: '100vw',
-                            opacity: 1,
-                            borderBottom: borderStr,
-                            boxShadow: 24,
-                            color: theme.palette.color,
-                            zIndex: 9,
-                            height: '5vh',
-                            alignItems: 'center',
-                            // lineHeight: '5vh',
-                            paddingLeft: '30px',
-                            fontFamily: theme.typography.fontFamily,
-                        }}>
+                    <div id="copy-left-div" style={{
+                        position: 'absolute',
+                        display: !copyModalIsOpen ? 'none' : 'flex', 
+                        marginTop: '5vh',
+                        width: '100vw',
+                        opacity: 1,
+                        borderBottom: borderStr,
+                        boxShadow: 24,
+                        color: theme.palette.color,
+                        zIndex: 9,
+                        height: '5vh',
+                        alignItems: 'center',
+                        paddingLeft: '30px',
+                        fontFamily: theme.typography.fontFamily,
+                    }}>
                         <span><img style={{ height: '3.6vh', width: 'auto' }} src={ccrainbow}/></span> Photography CC BY-SA Michael Robinson 2026
                     </div>
                     <div style={{ width: '100vw', display: 'flex', height: '5vh', justifyContent: 'right' }}>
@@ -427,16 +430,11 @@ export default function App() {
                                 zIndex: 9,
                                 marginTop: '5.1vh',
                                 position: 'absolute',
-                                width: '3.8vw',
                                 height: '4.5vh',
                                 opacity: 1,
-                                // borderColor: theme.palette.color,
-                                // borderWidth: '1px',
-                                // borderStyle: 'solid',
                                 color: theme.palette.color,
                                 fontFamily: theme.typography.fontFamily,
-                                fontSize: 'large',
-                                marginRight: '0.4vw',
+                                fontSize: 'large'
                             }}
                             onClick={handleClick}
                         >
@@ -546,58 +544,60 @@ export default function App() {
                                 <div style={{ textAlign: 'center' }}>
                                     <h1 style={{ fontFamily: theme.typography.fontFamily, color: theme.palette.color }}>Developer Portfolio</h1>
                                 </div>
-                                <Container className='container' style={{ marginTop: 75, minWidth: '70vw', justifyContent: 'space-evenly' }}>
+                                <Container className='container' style={{ marginTop: 75, maxWidth: '40vw', justifyContent: 'space-evenly' }}>
                                     <Row>
+                                        {projectCategories.map((val, index) => (
+                                            <Col med='1' key={index}>
+                                                <Button
+                                                    style={ val === cat ? { 
+                                                        color: theme.palette.color, 
+                                                        padding: '2px 0px 4px', 
+                                                        borderColor: theme.palette.border, 
+                                                        fontWeight: 'bold',
+                                                        fontFamily: theme.typography.fontFamily,
+                                                        fontSize: '0.8vw',
+                                                        marginBottom: '20px',
+                                                    } : { 
+                                                        color: theme.palette.color, 
+                                                        padding: '2px 0px 4px',
+                                                        fontFamily: theme.typography.fontFamily,
+                                                        fontSize: '0.8vw',
+                                                        marginBottom: '20px',
+                                                    }}
+                                                    onClick={() => FilterItem(val)}
+                                                    size='small'
+                                                    variant={theme.cardType}
+                                                    elevation="10"
+                                                >
+                                                    {val}
+                                                </Button>
+                                            </Col>
+                                        ))}
                                         <Col md='1'>
-                                            <Button 
-                                                style={ projectsLen === itemsLen ? { 
-                                                    color: theme.palette.color, 
-                                                    padding: '2px 0px 4px', 
-                                                    borderColor: theme.palette.border, 
-                                                    fontWeight: 'bold',
-                                                    fontFamily: theme.typography.fontFamily,
-                                                    fontSize: '0.8vw'
-                                                } : { 
-                                                    color: theme.palette.color, 
-                                                    padding: '2px 0px 4px',
-                                                    fontFamily: theme.typography.fontFamily,
-                                                    fontSize: '0.8vw'
-                                                    } 
-                                                }
-                                                onClick={() => FilterItem('all')}
-                                                size='small'
-                                                variant={theme.cardType}
-                                                elevation="10"
-                                            >
-                                            ALL
-                                            </Button>
-                                          </Col>
-                                            {projectCategories.map((val, index) => (
-                                                <Col med='1' key={index}>
-                                                    <Button
-                                                        style={ val === cat ? { 
-                                                            color: theme.palette.color, 
-                                                            padding: '2px 0px 4px', 
-                                                            borderColor: theme.palette.border, 
-                                                            fontWeight: 'bold',
-                                                            fontFamily: theme.typography.fontFamily,
-                                                            fontSize: '0.8vw'
-                                                        } : { 
-                                                            color: theme.palette.color, 
-                                                            padding: '2px 0px 4px',
-                                                            fontFamily: theme.typography.fontFamily,
-                                                            fontSize: '0.8vw'
-                                                        }}
-                                                        onClick={() => FilterItem(val)}
-                                                        size='small'
-                                                        variant={theme.cardType}
-                                                        elevation="10"
-                                                    >
-                                                        {val}
-                                                    </Button>
-                                                </Col>
-                                            ))}
-                                        
+                                        <Button 
+                                            style={ projectsLen === itemsLen ? { 
+                                                color: theme.palette.color, 
+                                                padding: '2px 0px 4px', 
+                                                borderColor: theme.palette.border, 
+                                                fontWeight: 'bold',
+                                                fontFamily: theme.typography.fontFamily,
+                                                fontSize: '0.8vw',
+                                                
+                                            } : { 
+                                                color: theme.palette.color, 
+                                                padding: '2px 0px 4px',
+                                                fontFamily: theme.typography.fontFamily,
+                                                fontSize: '0.8vw'
+                                                } 
+                                            }
+                                            onClick={() => FilterItem('all')}
+                                            size='small'
+                                            variant={theme.cardType}
+                                            elevation="10"
+                                        >
+                                        ALL
+                                        </Button>
+                                        </Col>
                                     </Row>
                                 </Container>
                                 <Grid container margin='auto' rowSpacing={8} columnSpacing={4} paddingBottom={4} width='85%'>
@@ -1067,7 +1067,7 @@ export default function App() {
                                                     </Row>
                                                 </Col>
                                             </Row>
-                                            <Row style={{ height: 0, position: 'relative', width: '40vw', textAlign: 'top' }}>
+                                            <Row style={{ height: 0, position: 'relative', width: '39.75vw', textAlign: 'top' }}>
                                                 <Col className='d-flex flex-column justify-content-end'>
                                                     <Row style={{ justifyContent: 'space-between' }}>
                                                         <a href='https://github.com/merobi-hub' target="_blank" style={{ color: theme.palette.color }} rel="noreferrer">
